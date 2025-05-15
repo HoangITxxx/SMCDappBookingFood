@@ -1,0 +1,85 @@
+{
+	"compiler": {
+		"version": "0.8.30+commit.73712a01"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"contracts/FoodAppFactory.sol": "ProxyLib"
+		},
+		"evmVersion": "cancun",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": true,
+			"runs": 0
+		},
+		"remappings": []
+	},
+	"sources": {
+		"contracts/FoodAppFactory.sol": {
+			"keccak256": "0xa014f2e97990e45350b8755d9f7b72686442cab9fd63ba8b77f9e21f6827c5ab",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://462d0bbfe12cc5a23485744c12d6d6252fb6e4a09d29f33501a99773fec3c4eb",
+				"dweb:/ipfs/QmNX9pFYDbGAGX43kvuASkFBzaCeuXPACKstLXtshpd6hk"
+			]
+		},
+		"interfaces/IMenuManager.sol": {
+			"keccak256": "0x90556f4dbe85561f751ebbdca10991ee3e4c636143032071f361a323908d6c42",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://2148671a70bccd6a4accc21a5d9877c5fe3065a38ed9b6819e24cfa9d887b915",
+				"dweb:/ipfs/QmbJVXoZVi65cuh9CAsRR9kVLoFwTdkNjKfrrR2oSnA6xN"
+			]
+		},
+		"interfaces/IOrderManager.sol": {
+			"keccak256": "0xae368137a04a2d49047693f28ed425610dab3723e05f7b4d91caf74c91e0a5c1",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://e839255bfc12390e052a4ceb1f6ad8980fa28fe07cd4852f2721aabac6cdc4b0",
+				"dweb:/ipfs/QmcbjDUHC2HvbJqWz8AU7mA3Yt6Hjco8qrWUXerty5bV84"
+			]
+		},
+		"interfaces/IRestaurantManager.sol": {
+			"keccak256": "0xe572868e2dfa09ac691b403ae0fcbbb7846a373627e0b74468de10ac7450a247",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://1d51c386edb0d6009819e8d0c40a28bbce427638e741ddc0c13afdf9d7167d2a",
+				"dweb:/ipfs/QmV3pHbZwAa52LBH2sZ3pbsDG74B7cvo1s4y36XDEhAaJ3"
+			]
+		},
+		"interfaces/IReviewManager.sol": {
+			"keccak256": "0xcf085ff21dffe691f77b91df3617ed4572e606df180fd9da771ac3a6eba440db",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://32631a103c0967c693c2c33261b58b21504213d7da73f7397dcfc85c0cd23bff",
+				"dweb:/ipfs/QmPQJUTLFyCLkr2mjDYyeeunTATtQ5xY3Yxn3ChQfji6tV"
+			]
+		},
+		"structs/FoodTypes.sol": {
+			"keccak256": "0xa9f6f613e64860ea25991b52f37663ece0595e9b712737210da59fb36099f30e",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://5e2657d23632a43394aa9abcd1479e50eececd4030fa8d90654fe883a2fd41dd",
+				"dweb:/ipfs/QmRsw1fBjJUWsSbGAZmowruqPGBxWfMKaT7CAjeD5nppkt"
+			]
+		}
+	},
+	"version": 1
+}

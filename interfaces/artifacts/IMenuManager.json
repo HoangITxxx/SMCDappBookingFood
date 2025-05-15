@@ -1,0 +1,274 @@
+{
+	"deploy": {
+		"VM:-": {
+			"linkReferences": {},
+			"autoDeployLib": true
+		},
+		"main:1": {
+			"linkReferences": {},
+			"autoDeployLib": true
+		},
+		"ropsten:3": {
+			"linkReferences": {},
+			"autoDeployLib": true
+		},
+		"rinkeby:4": {
+			"linkReferences": {},
+			"autoDeployLib": true
+		},
+		"kovan:42": {
+			"linkReferences": {},
+			"autoDeployLib": true
+		},
+		"goerli:5": {
+			"linkReferences": {},
+			"autoDeployLib": true
+		},
+		"Custom": {
+			"linkReferences": {},
+			"autoDeployLib": true
+		}
+	},
+	"data": {
+		"bytecode": {
+			"functionDebugData": {},
+			"generatedSources": [],
+			"linkReferences": {},
+			"object": "",
+			"opcodes": "",
+			"sourceMap": ""
+		},
+		"deployedBytecode": {
+			"functionDebugData": {},
+			"generatedSources": [],
+			"immutableReferences": {},
+			"linkReferences": {},
+			"object": "",
+			"opcodes": "",
+			"sourceMap": ""
+		},
+		"gasEstimates": null,
+		"methodIdentifiers": {
+			"addMenuItem(uint128,string,string,uint128,string,string,uint128)": "6ef07f03",
+			"getMenuItem(uint128,uint128)": "0c528968",
+			"initialize(address,address)": "485cc955",
+			"removeMenuItem(uint128,uint128)": "5b94ea5d",
+			"updateMenuItem(uint128,uint128,string,string,uint128,bool,string,string,uint128)": "fa9d2bec"
+		}
+	},
+	"abi": [
+		{
+			"inputs": [
+				{
+					"internalType": "uint128",
+					"name": "restaurantId",
+					"type": "uint128"
+				},
+				{
+					"internalType": "string",
+					"name": "name",
+					"type": "string"
+				},
+				{
+					"internalType": "string",
+					"name": "menuTitle",
+					"type": "string"
+				},
+				{
+					"internalType": "uint128",
+					"name": "price",
+					"type": "uint128"
+				},
+				{
+					"internalType": "string",
+					"name": "description",
+					"type": "string"
+				},
+				{
+					"internalType": "string",
+					"name": "category",
+					"type": "string"
+				},
+				{
+					"internalType": "uint128",
+					"name": "preparationTime",
+					"type": "uint128"
+				}
+			],
+			"name": "addMenuItem",
+			"outputs": [],
+			"stateMutability": "nonpayable",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "uint128",
+					"name": "restaurantId",
+					"type": "uint128"
+				},
+				{
+					"internalType": "uint128",
+					"name": "menuId",
+					"type": "uint128"
+				}
+			],
+			"name": "getMenuItem",
+			"outputs": [
+				{
+					"components": [
+						{
+							"internalType": "uint128",
+							"name": "id",
+							"type": "uint128"
+						},
+						{
+							"internalType": "uint128",
+							"name": "restaurantId",
+							"type": "uint128"
+						},
+						{
+							"internalType": "string",
+							"name": "name",
+							"type": "string"
+						},
+						{
+							"internalType": "string",
+							"name": "menuTitle",
+							"type": "string"
+						},
+						{
+							"internalType": "uint128",
+							"name": "price",
+							"type": "uint128"
+						},
+						{
+							"internalType": "bool",
+							"name": "available",
+							"type": "bool"
+						},
+						{
+							"internalType": "string",
+							"name": "description",
+							"type": "string"
+						},
+						{
+							"internalType": "string",
+							"name": "category",
+							"type": "string"
+						},
+						{
+							"internalType": "uint128",
+							"name": "totalRating",
+							"type": "uint128"
+						},
+						{
+							"internalType": "uint128",
+							"name": "ratingCount",
+							"type": "uint128"
+						},
+						{
+							"internalType": "uint128",
+							"name": "preparationTime",
+							"type": "uint128"
+						}
+					],
+					"internalType": "struct MenuItem",
+					"name": "",
+					"type": "tuple"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "address",
+					"name": "foodAppContract",
+					"type": "address"
+				},
+				{
+					"internalType": "address",
+					"name": "owner",
+					"type": "address"
+				}
+			],
+			"name": "initialize",
+			"outputs": [],
+			"stateMutability": "nonpayable",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "uint128",
+					"name": "restaurantId",
+					"type": "uint128"
+				},
+				{
+					"internalType": "uint128",
+					"name": "menuId",
+					"type": "uint128"
+				}
+			],
+			"name": "removeMenuItem",
+			"outputs": [],
+			"stateMutability": "nonpayable",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "uint128",
+					"name": "restaurantId",
+					"type": "uint128"
+				},
+				{
+					"internalType": "uint128",
+					"name": "menuId",
+					"type": "uint128"
+				},
+				{
+					"internalType": "string",
+					"name": "name",
+					"type": "string"
+				},
+				{
+					"internalType": "string",
+					"name": "menuTitle",
+					"type": "string"
+				},
+				{
+					"internalType": "uint128",
+					"name": "price",
+					"type": "uint128"
+				},
+				{
+					"internalType": "bool",
+					"name": "available",
+					"type": "bool"
+				},
+				{
+					"internalType": "string",
+					"name": "description",
+					"type": "string"
+				},
+				{
+					"internalType": "string",
+					"name": "category",
+					"type": "string"
+				},
+				{
+					"internalType": "uint128",
+					"name": "preparationTime",
+					"type": "uint128"
+				}
+			],
+			"name": "updateMenuItem",
+			"outputs": [],
+			"stateMutability": "nonpayable",
+			"type": "function"
+		}
+	]
+}

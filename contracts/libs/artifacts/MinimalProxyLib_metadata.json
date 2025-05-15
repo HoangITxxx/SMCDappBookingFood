@@ -1,0 +1,45 @@
+{
+	"compiler": {
+		"version": "0.8.30+commit.73712a01"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"contracts/libs/MinimalProxyLib.sol": "MinimalProxyLib"
+		},
+		"evmVersion": "cancun",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": true,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"contracts/libs/MinimalProxyLib.sol": {
+			"keccak256": "0xc67659ebf5317e58ac34a120efbdec33cc003057c6fccbec1908e8028bfc69e7",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://a31c3be2593435834bee064e034ee4bfede9a58db2cad0f23ac35eb8c7f14e9c",
+				"dweb:/ipfs/QmXPBWnBo1M92m49Ln7NspNdmsLzCa3fMQv9Q695NpRfni"
+			]
+		}
+	},
+	"version": 1
+}
