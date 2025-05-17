@@ -8,8 +8,9 @@ interface IOrderManager {
     function cancelOrder(address customerEoa, uint128 orderId) external;
     function completeOrder(address staffEoa, uint128 orderId, uint128 staffRestaurantId) external;
     function updateOrderStatus(address staffEoa, uint128 orderId, OrderStatus newStatus, uint128 staffRestaurantId) external;
+    //==== Hàm Get =========================
     function getOrder(uint128 orderId) external view returns (Order memory);
-    // Các hàm getAll... nên được bỏ hoặc thiết kế lại (ví dụ: getOrdersByCustomer)
-    // function getAllOrders() external view returns (Order[] memory);
-    // function getOrderDetailById(uint128 orderId) external view returns (OrderDetail memory); // Gộp vào Order
+    function getOrdersByCustomer(address customerEoa, uint256 startIndex, uint256 limit) external view returns (Order[] memory ordersAn, uint256 nextStartIndex);
+    function getOrderCountByCustomer(address customerEoa) external view returns (uint256);
+
 }

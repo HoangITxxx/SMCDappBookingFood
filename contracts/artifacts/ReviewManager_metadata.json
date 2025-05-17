@@ -49,6 +49,11 @@
 			},
 			{
 				"inputs": [],
+				"name": "ReviewManager__MenuItemNotFound",
+				"type": "error"
+			},
+			{
+				"inputs": [],
 				"name": "ReviewManager__NotFoodApp",
 				"type": "error"
 			},
@@ -68,6 +73,43 @@
 					}
 				],
 				"name": "Initialized",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "uint128",
+						"name": "reviewId",
+						"type": "uint128"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "customer",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "uint128",
+						"name": "menuItemId",
+						"type": "uint128"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint128",
+						"name": "restaurantId",
+						"type": "uint128"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint8",
+						"name": "rating",
+						"type": "uint8"
+					}
+				],
+				"name": "MenuItemRated",
 				"type": "event"
 			},
 			{
@@ -121,6 +163,43 @@
 				"type": "event"
 			},
 			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "uint128",
+						"name": "reviewId",
+						"type": "uint128"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "customer",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "staff",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint128",
+						"name": "restaurantId",
+						"type": "uint128"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint8",
+						"name": "rating",
+						"type": "uint8"
+					}
+				],
+				"name": "StaffRated",
+				"type": "event"
+			},
+			{
 				"inputs": [],
 				"name": "foodAppContractAddress",
 				"outputs": [
@@ -128,6 +207,166 @@
 						"internalType": "address",
 						"name": "",
 						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint128",
+						"name": "menuItemId",
+						"type": "uint128"
+					}
+				],
+				"name": "getAverageMenuItemRating",
+				"outputs": [
+					{
+						"internalType": "uint128",
+						"name": "averageRating",
+						"type": "uint128"
+					},
+					{
+						"internalType": "uint128",
+						"name": "ratingCount",
+						"type": "uint128"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "staff",
+						"type": "address"
+					}
+				],
+				"name": "getAverageStaffRating",
+				"outputs": [
+					{
+						"internalType": "uint128",
+						"name": "averageRating",
+						"type": "uint128"
+					},
+					{
+						"internalType": "uint128",
+						"name": "ratingCount",
+						"type": "uint128"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint128",
+						"name": "menuItemId",
+						"type": "uint128"
+					}
+				],
+				"name": "getMenuItemReviews",
+				"outputs": [
+					{
+						"components": [
+							{
+								"internalType": "uint128",
+								"name": "id",
+								"type": "uint128"
+							},
+							{
+								"internalType": "address",
+								"name": "customer",
+								"type": "address"
+							},
+							{
+								"internalType": "uint128",
+								"name": "menuItemId",
+								"type": "uint128"
+							},
+							{
+								"internalType": "uint128",
+								"name": "restaurantId",
+								"type": "uint128"
+							},
+							{
+								"internalType": "uint8",
+								"name": "rating",
+								"type": "uint8"
+							},
+							{
+								"internalType": "string",
+								"name": "comment",
+								"type": "string"
+							},
+							{
+								"internalType": "uint128",
+								"name": "timestamp",
+								"type": "uint128"
+							}
+						],
+						"internalType": "struct MenuItemReview[]",
+						"name": "",
+						"type": "tuple[]"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "staff",
+						"type": "address"
+					}
+				],
+				"name": "getStaffReviews",
+				"outputs": [
+					{
+						"components": [
+							{
+								"internalType": "uint128",
+								"name": "id",
+								"type": "uint128"
+							},
+							{
+								"internalType": "address",
+								"name": "customer",
+								"type": "address"
+							},
+							{
+								"internalType": "address",
+								"name": "staff",
+								"type": "address"
+							},
+							{
+								"internalType": "uint128",
+								"name": "restaurantId",
+								"type": "uint128"
+							},
+							{
+								"internalType": "uint8",
+								"name": "rating",
+								"type": "uint8"
+							},
+							{
+								"internalType": "string",
+								"name": "comment",
+								"type": "string"
+							},
+							{
+								"internalType": "uint128",
+								"name": "timestamp",
+								"type": "uint128"
+							}
+						],
+						"internalType": "struct StaffReview[]",
+						"name": "",
+						"type": "tuple[]"
 					}
 				],
 				"stateMutability": "view",
@@ -147,6 +386,11 @@
 					},
 					{
 						"internalType": "address",
+						"name": "_menuManagerAddress",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
 						"name": "_owner",
 						"type": "address"
 					}
@@ -154,6 +398,55 @@
 				"name": "initialize",
 				"outputs": [],
 				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint128",
+						"name": "",
+						"type": "uint128"
+					}
+				],
+				"name": "menuItemReviews",
+				"outputs": [
+					{
+						"internalType": "uint128",
+						"name": "id",
+						"type": "uint128"
+					},
+					{
+						"internalType": "address",
+						"name": "customer",
+						"type": "address"
+					},
+					{
+						"internalType": "uint128",
+						"name": "menuItemId",
+						"type": "uint128"
+					},
+					{
+						"internalType": "uint128",
+						"name": "restaurantId",
+						"type": "uint128"
+					},
+					{
+						"internalType": "uint8",
+						"name": "rating",
+						"type": "uint8"
+					},
+					{
+						"internalType": "string",
+						"name": "comment",
+						"type": "string"
+					},
+					{
+						"internalType": "uint128",
+						"name": "timestamp",
+						"type": "uint128"
+					}
+				],
+				"stateMutability": "view",
 				"type": "function"
 			},
 			{
@@ -208,6 +501,50 @@
 						"type": "uint128"
 					},
 					{
+						"internalType": "uint128",
+						"name": "menuItemId",
+						"type": "uint128"
+					},
+					{
+						"internalType": "uint8",
+						"name": "rating",
+						"type": "uint8"
+					},
+					{
+						"internalType": "string",
+						"name": "comment",
+						"type": "string"
+					}
+				],
+				"name": "rateMenuItem",
+				"outputs": [
+					{
+						"internalType": "uint128",
+						"name": "newTotalRating",
+						"type": "uint128"
+					},
+					{
+						"internalType": "uint128",
+						"name": "newRatingCount",
+						"type": "uint128"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "customerEoa",
+						"type": "address"
+					},
+					{
+						"internalType": "uint128",
+						"name": "restaurantId",
+						"type": "uint128"
+					},
+					{
 						"internalType": "uint8",
 						"name": "rating",
 						"type": "uint8"
@@ -219,6 +556,39 @@
 					}
 				],
 				"name": "rateRestaurant",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "customerEoa",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "staff",
+						"type": "address"
+					},
+					{
+						"internalType": "uint128",
+						"name": "restaurantId",
+						"type": "uint128"
+					},
+					{
+						"internalType": "uint8",
+						"name": "rating",
+						"type": "uint8"
+					},
+					{
+						"internalType": "string",
+						"name": "comment",
+						"type": "string"
+					}
+				],
+				"name": "rateStaff",
 				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
@@ -264,6 +634,11 @@
 						"type": "address"
 					},
 					{
+						"internalType": "address",
+						"name": "staff",
+						"type": "address"
+					},
+					{
 						"internalType": "uint128",
 						"name": "restaurantId",
 						"type": "uint128"
@@ -300,11 +675,108 @@
 						"type": "uint256"
 					}
 				],
+				"name": "reviewsByMenuItem",
+				"outputs": [
+					{
+						"internalType": "uint128",
+						"name": "",
+						"type": "uint128"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint128",
+						"name": "",
+						"type": "uint128"
+					},
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
 				"name": "reviewsByRestaurant",
 				"outputs": [
 					{
 						"internalType": "uint128",
 						"name": "",
+						"type": "uint128"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"name": "reviewsByStaff",
+				"outputs": [
+					{
+						"internalType": "uint128",
+						"name": "",
+						"type": "uint128"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint128",
+						"name": "",
+						"type": "uint128"
+					}
+				],
+				"name": "staffReviews",
+				"outputs": [
+					{
+						"internalType": "uint128",
+						"name": "id",
+						"type": "uint128"
+					},
+					{
+						"internalType": "address",
+						"name": "customer",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "staff",
+						"type": "address"
+					},
+					{
+						"internalType": "uint128",
+						"name": "restaurantId",
+						"type": "uint128"
+					},
+					{
+						"internalType": "uint8",
+						"name": "rating",
+						"type": "uint8"
+					},
+					{
+						"internalType": "string",
+						"name": "comment",
+						"type": "string"
+					},
+					{
+						"internalType": "uint128",
+						"name": "timestamp",
 						"type": "uint128"
 					}
 				],
@@ -377,14 +849,14 @@
 		"compilationTarget": {
 			"contracts/ReviewManager.sol": "ReviewManager"
 		},
-		"evmVersion": "cancun",
+		"evmVersion": "prague",
 		"libraries": {},
 		"metadata": {
 			"bytecodeHash": "ipfs"
 		},
 		"optimizer": {
 			"enabled": true,
-			"runs": 0
+			"runs": 200
 		},
 		"remappings": []
 	},
@@ -414,43 +886,43 @@
 			]
 		},
 		"contracts/ReviewManager.sol": {
-			"keccak256": "0xa562f70fe2c5d0c35b4a6507033588880757376b25845474801c0d10724948c0",
+			"keccak256": "0xbb7954260d6edad8c592bb7792ee5ebbbf87eaa7d5c75280180c9b03b56d5006",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://d539e4c4312080f705352324eed66963860112b366ca2879d5483745713c405d",
-				"dweb:/ipfs/QmbVPHL3F7ce3xT4khd47XZgihJW8PSsUwFr48qoMFLTSH"
+				"bzz-raw://c3d848c2d129e517baf881654e87b3c3d5bf4fc5e0b93e69b9219797f961e1ae",
+				"dweb:/ipfs/QmcnfW8N3SNdYXfn7grE9Gyz8bXM8bSNpEdL7KX2VSy7EQ"
 			]
 		},
 		"interfaces/IMenuManager.sol": {
-			"keccak256": "0x90556f4dbe85561f751ebbdca10991ee3e4c636143032071f361a323908d6c42",
+			"keccak256": "0xc63f43f0dcc5c87e6da7eb2518b2ff43d5d0d40043e1f036fd74f7318c7f109c",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://2148671a70bccd6a4accc21a5d9877c5fe3065a38ed9b6819e24cfa9d887b915",
-				"dweb:/ipfs/QmbJVXoZVi65cuh9CAsRR9kVLoFwTdkNjKfrrR2oSnA6xN"
+				"bzz-raw://bef36352eceaee618d4aa220f9b1e140a6fb1cb376c08c429d6a6a4c49dce8be",
+				"dweb:/ipfs/QmfFUueVAAp49CeDdV2UyGyfU9gr2BYLZid4cVm4k1ddde"
 			]
 		},
 		"interfaces/IRestaurantManager.sol": {
-			"keccak256": "0xe572868e2dfa09ac691b403ae0fcbbb7846a373627e0b74468de10ac7450a247",
+			"keccak256": "0x22ca1799f272451d7fde6d062136cd6ba18b3d08dc908110b539fbf760c2e0aa",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://1d51c386edb0d6009819e8d0c40a28bbce427638e741ddc0c13afdf9d7167d2a",
-				"dweb:/ipfs/QmV3pHbZwAa52LBH2sZ3pbsDG74B7cvo1s4y36XDEhAaJ3"
+				"bzz-raw://15001a58d19086f0b3f90f4affed8750585833a6f92227b1539976b7ed0017d9",
+				"dweb:/ipfs/QmYocY1ei98wtd38FWKtKd8BXozFYtKKC7wQpJtxNpUhaF"
 			]
 		},
 		"interfaces/IReviewManager.sol": {
-			"keccak256": "0xcf085ff21dffe691f77b91df3617ed4572e606df180fd9da771ac3a6eba440db",
+			"keccak256": "0x1f47b2f1c3f7d467a4d7be735c50a992d6807613f1ea6ad0abac3327f11f521a",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://32631a103c0967c693c2c33261b58b21504213d7da73f7397dcfc85c0cd23bff",
-				"dweb:/ipfs/QmPQJUTLFyCLkr2mjDYyeeunTATtQ5xY3Yxn3ChQfji6tV"
+				"bzz-raw://c753dcda645c0ad6ef81485a247182a2b6dc93879237b2e86b158d8f413d72d7",
+				"dweb:/ipfs/QmXeL7J9esWdz3tvk7x82GwRbT8M6Py3HiaWYmnkUZvTL4"
 			]
 		},
 		"structs/FoodTypes.sol": {
-			"keccak256": "0xa9f6f613e64860ea25991b52f37663ece0595e9b712737210da59fb36099f30e",
+			"keccak256": "0x8d46fb9f22c1245e2342a15285e279e9e710baf057b6fbce0e2b10c4b9753371",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://5e2657d23632a43394aa9abcd1479e50eececd4030fa8d90654fe883a2fd41dd",
-				"dweb:/ipfs/QmRsw1fBjJUWsSbGAZmowruqPGBxWfMKaT7CAjeD5nppkt"
+				"bzz-raw://73d7e0d738b54e8812777058abe3b88d98ef3d4a91aacbf6d0ede3359a73a69e",
+				"dweb:/ipfs/QmWRjnoJTB55wHg55icrzwTY5wKDBFmg3DU8dyzN19Kt8g"
 			]
 		}
 	},

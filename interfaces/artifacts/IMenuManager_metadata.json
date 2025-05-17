@@ -23,6 +23,11 @@
 						"type": "string"
 					},
 					{
+						"internalType": "string",
+						"name": "imageUrl",
+						"type": "string"
+					},
+					{
 						"internalType": "uint128",
 						"name": "price",
 						"type": "uint128"
@@ -86,6 +91,11 @@
 								"type": "string"
 							},
 							{
+								"internalType": "string",
+								"name": "imageUrl",
+								"type": "string"
+							},
+							{
 								"internalType": "uint128",
 								"name": "price",
 								"type": "uint128"
@@ -132,6 +142,106 @@
 			{
 				"inputs": [
 					{
+						"internalType": "uint128",
+						"name": "restaurantId",
+						"type": "uint128"
+					}
+				],
+				"name": "getMenuItemIdsByRestaurant",
+				"outputs": [
+					{
+						"internalType": "uint128[]",
+						"name": "",
+						"type": "uint128[]"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint128",
+						"name": "menuId",
+						"type": "uint128"
+					}
+				],
+				"name": "getMenuItemsByRestaurant",
+				"outputs": [
+					{
+						"components": [
+							{
+								"internalType": "uint128",
+								"name": "id",
+								"type": "uint128"
+							},
+							{
+								"internalType": "uint128",
+								"name": "restaurantId",
+								"type": "uint128"
+							},
+							{
+								"internalType": "string",
+								"name": "name",
+								"type": "string"
+							},
+							{
+								"internalType": "string",
+								"name": "menuTitle",
+								"type": "string"
+							},
+							{
+								"internalType": "string",
+								"name": "imageUrl",
+								"type": "string"
+							},
+							{
+								"internalType": "uint128",
+								"name": "price",
+								"type": "uint128"
+							},
+							{
+								"internalType": "bool",
+								"name": "available",
+								"type": "bool"
+							},
+							{
+								"internalType": "string",
+								"name": "description",
+								"type": "string"
+							},
+							{
+								"internalType": "string",
+								"name": "category",
+								"type": "string"
+							},
+							{
+								"internalType": "uint128",
+								"name": "totalRating",
+								"type": "uint128"
+							},
+							{
+								"internalType": "uint128",
+								"name": "ratingCount",
+								"type": "uint128"
+							},
+							{
+								"internalType": "uint128",
+								"name": "preparationTime",
+								"type": "uint128"
+							}
+						],
+						"internalType": "struct MenuItem[]",
+						"name": "",
+						"type": "tuple[]"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
 						"internalType": "address",
 						"name": "foodAppContract",
 						"type": "address"
@@ -168,49 +278,66 @@
 			{
 				"inputs": [
 					{
-						"internalType": "uint128",
-						"name": "restaurantId",
-						"type": "uint128"
-					},
-					{
-						"internalType": "uint128",
-						"name": "menuId",
-						"type": "uint128"
-					},
-					{
-						"internalType": "string",
-						"name": "name",
-						"type": "string"
-					},
-					{
-						"internalType": "string",
-						"name": "menuTitle",
-						"type": "string"
-					},
-					{
-						"internalType": "uint128",
-						"name": "price",
-						"type": "uint128"
-					},
-					{
-						"internalType": "bool",
-						"name": "available",
-						"type": "bool"
-					},
-					{
-						"internalType": "string",
-						"name": "description",
-						"type": "string"
-					},
-					{
-						"internalType": "string",
-						"name": "category",
-						"type": "string"
-					},
-					{
-						"internalType": "uint128",
-						"name": "preparationTime",
-						"type": "uint128"
+						"components": [
+							{
+								"internalType": "uint128",
+								"name": "restaurantId",
+								"type": "uint128"
+							},
+							{
+								"internalType": "uint128",
+								"name": "menuId",
+								"type": "uint128"
+							},
+							{
+								"internalType": "string",
+								"name": "name",
+								"type": "string"
+							},
+							{
+								"internalType": "string",
+								"name": "menuTitle",
+								"type": "string"
+							},
+							{
+								"internalType": "uint128",
+								"name": "price",
+								"type": "uint128"
+							},
+							{
+								"internalType": "bool",
+								"name": "available",
+								"type": "bool"
+							},
+							{
+								"internalType": "string",
+								"name": "description",
+								"type": "string"
+							},
+							{
+								"internalType": "string",
+								"name": "category",
+								"type": "string"
+							},
+							{
+								"internalType": "uint128",
+								"name": "preparationTime",
+								"type": "uint128"
+							},
+							{
+								"internalType": "uint128",
+								"name": "totalRating",
+								"type": "uint128"
+							},
+							{
+								"internalType": "uint128",
+								"name": "ratingCount",
+								"type": "uint128"
+							}
+						],
+						"internalType": "struct UpdateMenuItemParams",
+						"name": "params",
+						"type": "tuple"
 					}
 				],
 				"name": "updateMenuItem",
@@ -234,32 +361,32 @@
 		"compilationTarget": {
 			"interfaces/IMenuManager.sol": "IMenuManager"
 		},
-		"evmVersion": "cancun",
+		"evmVersion": "prague",
 		"libraries": {},
 		"metadata": {
 			"bytecodeHash": "ipfs"
 		},
 		"optimizer": {
 			"enabled": true,
-			"runs": 0
+			"runs": 200
 		},
 		"remappings": []
 	},
 	"sources": {
 		"interfaces/IMenuManager.sol": {
-			"keccak256": "0x90556f4dbe85561f751ebbdca10991ee3e4c636143032071f361a323908d6c42",
+			"keccak256": "0x3eea07d91b37841658f9c350601814492ec1cd32ee838d168633414d3c35b641",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://2148671a70bccd6a4accc21a5d9877c5fe3065a38ed9b6819e24cfa9d887b915",
-				"dweb:/ipfs/QmbJVXoZVi65cuh9CAsRR9kVLoFwTdkNjKfrrR2oSnA6xN"
+				"bzz-raw://66d59c7fb8bd7de0711e83a1548e9b7ea69099ec0c594e836e632fcb8fdbbf6e",
+				"dweb:/ipfs/Qmd5G9A4jnjqXjpTy3T3gjSmztL6kS1ZUhQNn6NBDMLKSe"
 			]
 		},
 		"structs/FoodTypes.sol": {
-			"keccak256": "0xa9f6f613e64860ea25991b52f37663ece0595e9b712737210da59fb36099f30e",
+			"keccak256": "0x3f5d6befba5c5df70f005b50c95bb69fa4be5534e09f2c66ea06976a0e2a677b",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://5e2657d23632a43394aa9abcd1479e50eececd4030fa8d90654fe883a2fd41dd",
-				"dweb:/ipfs/QmRsw1fBjJUWsSbGAZmowruqPGBxWfMKaT7CAjeD5nppkt"
+				"bzz-raw://9a952bebc301907bc3f3cb2e5dbb52d83ce9c4fe9822f0611b602022f0746af1",
+				"dweb:/ipfs/Qmc8fVWULDz94ZATEHh7VJsSGovpfbJJaVGS7wc7wVVn3S"
 			]
 		}
 	},

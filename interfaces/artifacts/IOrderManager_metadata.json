@@ -119,11 +119,138 @@
 								"internalType": "uint128",
 								"name": "preparationTime",
 								"type": "uint128"
+							},
+							{
+								"internalType": "uint128",
+								"name": "quantity",
+								"type": "uint128"
 							}
 						],
 						"internalType": "struct Order",
 						"name": "",
 						"type": "tuple"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "customerEoa",
+						"type": "address"
+					}
+				],
+				"name": "getOrderCountByCustomer",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "customerEoa",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "startIndex",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "limit",
+						"type": "uint256"
+					}
+				],
+				"name": "getOrdersByCustomer",
+				"outputs": [
+					{
+						"components": [
+							{
+								"internalType": "uint128",
+								"name": "id",
+								"type": "uint128"
+							},
+							{
+								"internalType": "address",
+								"name": "customer",
+								"type": "address"
+							},
+							{
+								"internalType": "uint128",
+								"name": "restaurantId",
+								"type": "uint128"
+							},
+							{
+								"components": [
+									{
+										"internalType": "uint128",
+										"name": "menuItemId",
+										"type": "uint128"
+									},
+									{
+										"internalType": "string",
+										"name": "name",
+										"type": "string"
+									},
+									{
+										"internalType": "uint128",
+										"name": "pricePerUnit",
+										"type": "uint128"
+									},
+									{
+										"internalType": "uint128",
+										"name": "quantity",
+										"type": "uint128"
+									}
+								],
+								"internalType": "struct OrderItemDetail[]",
+								"name": "itemsDetail",
+								"type": "tuple[]"
+							},
+							{
+								"internalType": "uint256",
+								"name": "totalPrice",
+								"type": "uint256"
+							},
+							{
+								"internalType": "enum OrderStatus",
+								"name": "status",
+								"type": "uint8"
+							},
+							{
+								"internalType": "uint128",
+								"name": "timestamp",
+								"type": "uint128"
+							},
+							{
+								"internalType": "uint128",
+								"name": "preparationTime",
+								"type": "uint128"
+							},
+							{
+								"internalType": "uint128",
+								"name": "quantity",
+								"type": "uint128"
+							}
+						],
+						"internalType": "struct Order[]",
+						"name": "ordersAn",
+						"type": "tuple[]"
+					},
+					{
+						"internalType": "uint256",
+						"name": "nextStartIndex",
+						"type": "uint256"
 					}
 				],
 				"stateMutability": "view",
@@ -229,32 +356,32 @@
 		"compilationTarget": {
 			"interfaces/IOrderManager.sol": "IOrderManager"
 		},
-		"evmVersion": "cancun",
+		"evmVersion": "prague",
 		"libraries": {},
 		"metadata": {
 			"bytecodeHash": "ipfs"
 		},
 		"optimizer": {
 			"enabled": true,
-			"runs": 0
+			"runs": 200
 		},
 		"remappings": []
 	},
 	"sources": {
 		"interfaces/IOrderManager.sol": {
-			"keccak256": "0xae368137a04a2d49047693f28ed425610dab3723e05f7b4d91caf74c91e0a5c1",
+			"keccak256": "0x3df6ca33d2b579c3cab5aa7811fb7070aa7527bdb7e8aeddb901f447f940e351",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://e839255bfc12390e052a4ceb1f6ad8980fa28fe07cd4852f2721aabac6cdc4b0",
-				"dweb:/ipfs/QmcbjDUHC2HvbJqWz8AU7mA3Yt6Hjco8qrWUXerty5bV84"
+				"bzz-raw://b33497e8a54e8232c688d79c8ee28e217bcf0847ab054d7fc90843179f0da70c",
+				"dweb:/ipfs/QmUfm8zahNMExoojHzcbsABSJEEkx4baD1qNyyfDmNv6iA"
 			]
 		},
 		"structs/FoodTypes.sol": {
-			"keccak256": "0xa9f6f613e64860ea25991b52f37663ece0595e9b712737210da59fb36099f30e",
+			"keccak256": "0x8d46fb9f22c1245e2342a15285e279e9e710baf057b6fbce0e2b10c4b9753371",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://5e2657d23632a43394aa9abcd1479e50eececd4030fa8d90654fe883a2fd41dd",
-				"dweb:/ipfs/QmRsw1fBjJUWsSbGAZmowruqPGBxWfMKaT7CAjeD5nppkt"
+				"bzz-raw://73d7e0d738b54e8812777058abe3b88d98ef3d4a91aacbf6d0ede3359a73a69e",
+				"dweb:/ipfs/QmWRjnoJTB55wHg55icrzwTY5wKDBFmg3DU8dyzN19Kt8g"
 			]
 		}
 	},

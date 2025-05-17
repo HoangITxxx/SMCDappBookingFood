@@ -5,6 +5,7 @@ import "../interfaces/IRestaurantManager.sol";
 import "../interfaces/IMenuManager.sol";
 import "../interfaces/IOrderManager.sol";
 import "../interfaces/IReviewManager.sol";
+import "../interfaces/IUserProfileManager.sol";
 
 library ProxyLib {
     function deployMinimalProxy(address implementation) internal returns (address proxy) {
@@ -87,9 +88,13 @@ contract FoodAppFactory {
             if (restaurantManagerAddress == address(0)) revert FoodAppFactory__DependencyNotDeployed("RestaurantManager");
             IOrderManager(managerProxy).initialize(foodAppContract, menuManagerAddress, restaurantManagerAddress, factoryOwner);
         } else if (typeHash == keccak256("ReviewManager")) {
-            address restaurantManagerAddressRev = managers[foodAppContract]["RestaurantManager"];
-            if (restaurantManagerAddressRev == address(0)) revert FoodAppFactory__DependencyNotDeployed("RestaurantManager for Review");
-            IReviewManager(managerProxy).initialize(foodAppContract, restaurantManagerAddressRev, factoryOwner);
+            address restaurantManagerAddress = managers[foodAppContract]["RestaurantManager"];
+            address menuManagerAddress = managers[foodAppContract]["MenuManager"];
+            if (restaurantManagerAddress == address(0)) revert FoodAppFactory__DependencyNotDeployed("RestaurantManager");
+            if (menuManagerAddress == address(0)) revert FoodAppFactory__DependencyNotDeployed("MenuManager");
+            IReviewManager(managerProxy).initialize(foodAppContract, restaurantManagerAddress, menuManagerAddress, factoryOwner);
+        } else if (typeHash == keccak256(abi.encodePacked("UserProfileManager"))) { 
+            IUserProfileManager(managerProxy).initialize(foodAppContract, factoryOwner);
         } else {
             revert FoodAppFactory__UnknownManagerType();
         }

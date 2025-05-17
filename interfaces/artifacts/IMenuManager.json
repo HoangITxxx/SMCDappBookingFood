@@ -49,11 +49,13 @@
 		},
 		"gasEstimates": null,
 		"methodIdentifiers": {
-			"addMenuItem(uint128,string,string,uint128,string,string,uint128)": "6ef07f03",
+			"addMenuItem(uint128,string,string,string,uint128,string,string,uint128)": "d5d2768b",
 			"getMenuItem(uint128,uint128)": "0c528968",
+			"getMenuItemIdsByRestaurant(uint128)": "6b88cde5",
+			"getMenuItemsByRestaurant(uint128)": "61dcddda",
 			"initialize(address,address)": "485cc955",
 			"removeMenuItem(uint128,uint128)": "5b94ea5d",
-			"updateMenuItem(uint128,uint128,string,string,uint128,bool,string,string,uint128)": "fa9d2bec"
+			"updateMenuItem((uint128,uint128,string,string,uint128,bool,string,string,uint128,uint128,uint128))": "52715b80"
 		}
 	},
 	"abi": [
@@ -72,6 +74,11 @@
 				{
 					"internalType": "string",
 					"name": "menuTitle",
+					"type": "string"
+				},
+				{
+					"internalType": "string",
+					"name": "imageUrl",
 					"type": "string"
 				},
 				{
@@ -138,6 +145,11 @@
 							"type": "string"
 						},
 						{
+							"internalType": "string",
+							"name": "imageUrl",
+							"type": "string"
+						},
+						{
 							"internalType": "uint128",
 							"name": "price",
 							"type": "uint128"
@@ -184,6 +196,106 @@
 		{
 			"inputs": [
 				{
+					"internalType": "uint128",
+					"name": "restaurantId",
+					"type": "uint128"
+				}
+			],
+			"name": "getMenuItemIdsByRestaurant",
+			"outputs": [
+				{
+					"internalType": "uint128[]",
+					"name": "",
+					"type": "uint128[]"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "uint128",
+					"name": "menuId",
+					"type": "uint128"
+				}
+			],
+			"name": "getMenuItemsByRestaurant",
+			"outputs": [
+				{
+					"components": [
+						{
+							"internalType": "uint128",
+							"name": "id",
+							"type": "uint128"
+						},
+						{
+							"internalType": "uint128",
+							"name": "restaurantId",
+							"type": "uint128"
+						},
+						{
+							"internalType": "string",
+							"name": "name",
+							"type": "string"
+						},
+						{
+							"internalType": "string",
+							"name": "menuTitle",
+							"type": "string"
+						},
+						{
+							"internalType": "string",
+							"name": "imageUrl",
+							"type": "string"
+						},
+						{
+							"internalType": "uint128",
+							"name": "price",
+							"type": "uint128"
+						},
+						{
+							"internalType": "bool",
+							"name": "available",
+							"type": "bool"
+						},
+						{
+							"internalType": "string",
+							"name": "description",
+							"type": "string"
+						},
+						{
+							"internalType": "string",
+							"name": "category",
+							"type": "string"
+						},
+						{
+							"internalType": "uint128",
+							"name": "totalRating",
+							"type": "uint128"
+						},
+						{
+							"internalType": "uint128",
+							"name": "ratingCount",
+							"type": "uint128"
+						},
+						{
+							"internalType": "uint128",
+							"name": "preparationTime",
+							"type": "uint128"
+						}
+					],
+					"internalType": "struct MenuItem[]",
+					"name": "",
+					"type": "tuple[]"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
 					"internalType": "address",
 					"name": "foodAppContract",
 					"type": "address"
@@ -220,49 +332,66 @@
 		{
 			"inputs": [
 				{
-					"internalType": "uint128",
-					"name": "restaurantId",
-					"type": "uint128"
-				},
-				{
-					"internalType": "uint128",
-					"name": "menuId",
-					"type": "uint128"
-				},
-				{
-					"internalType": "string",
-					"name": "name",
-					"type": "string"
-				},
-				{
-					"internalType": "string",
-					"name": "menuTitle",
-					"type": "string"
-				},
-				{
-					"internalType": "uint128",
-					"name": "price",
-					"type": "uint128"
-				},
-				{
-					"internalType": "bool",
-					"name": "available",
-					"type": "bool"
-				},
-				{
-					"internalType": "string",
-					"name": "description",
-					"type": "string"
-				},
-				{
-					"internalType": "string",
-					"name": "category",
-					"type": "string"
-				},
-				{
-					"internalType": "uint128",
-					"name": "preparationTime",
-					"type": "uint128"
+					"components": [
+						{
+							"internalType": "uint128",
+							"name": "restaurantId",
+							"type": "uint128"
+						},
+						{
+							"internalType": "uint128",
+							"name": "menuId",
+							"type": "uint128"
+						},
+						{
+							"internalType": "string",
+							"name": "name",
+							"type": "string"
+						},
+						{
+							"internalType": "string",
+							"name": "menuTitle",
+							"type": "string"
+						},
+						{
+							"internalType": "uint128",
+							"name": "price",
+							"type": "uint128"
+						},
+						{
+							"internalType": "bool",
+							"name": "available",
+							"type": "bool"
+						},
+						{
+							"internalType": "string",
+							"name": "description",
+							"type": "string"
+						},
+						{
+							"internalType": "string",
+							"name": "category",
+							"type": "string"
+						},
+						{
+							"internalType": "uint128",
+							"name": "preparationTime",
+							"type": "uint128"
+						},
+						{
+							"internalType": "uint128",
+							"name": "totalRating",
+							"type": "uint128"
+						},
+						{
+							"internalType": "uint128",
+							"name": "ratingCount",
+							"type": "uint128"
+						}
+					],
+					"internalType": "struct UpdateMenuItemParams",
+					"name": "params",
+					"type": "tuple"
 				}
 			],
 			"name": "updateMenuItem",

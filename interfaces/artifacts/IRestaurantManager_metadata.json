@@ -96,24 +96,24 @@
 		"compilationTarget": {
 			"interfaces/IRestaurantManager.sol": "IRestaurantManager"
 		},
-		"evmVersion": "cancun",
+		"evmVersion": "prague",
 		"libraries": {},
 		"metadata": {
 			"bytecodeHash": "ipfs"
 		},
 		"optimizer": {
 			"enabled": true,
-			"runs": 0
+			"runs": 200
 		},
 		"remappings": []
 	},
 	"sources": {
 		"interfaces/IRestaurantManager.sol": {
-			"keccak256": "0xe572868e2dfa09ac691b403ae0fcbbb7846a373627e0b74468de10ac7450a247",
+			"keccak256": "0x22ca1799f272451d7fde6d062136cd6ba18b3d08dc908110b539fbf760c2e0aa",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://1d51c386edb0d6009819e8d0c40a28bbce427638e741ddc0c13afdf9d7167d2a",
-				"dweb:/ipfs/QmV3pHbZwAa52LBH2sZ3pbsDG74B7cvo1s4y36XDEhAaJ3"
+				"bzz-raw://15001a58d19086f0b3f90f4affed8750585833a6f92227b1539976b7ed0017d9",
+				"dweb:/ipfs/QmYocY1ei98wtd38FWKtKd8BXozFYtKKC7wQpJtxNpUhaF"
 			]
 		}
 	},

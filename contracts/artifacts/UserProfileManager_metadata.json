@@ -39,17 +39,32 @@
 			},
 			{
 				"inputs": [],
-				"name": "RestaurantManager__InvalidAddress",
+				"name": "UserProfileManager__AlreadyInitialized",
 				"type": "error"
 			},
 			{
 				"inputs": [],
-				"name": "RestaurantManager__NotFoodApp",
+				"name": "UserProfileManager__EmptyName",
 				"type": "error"
 			},
 			{
 				"inputs": [],
-				"name": "RestaurantManager__RestaurantNotFound",
+				"name": "UserProfileManager__InvalidAddress",
+				"type": "error"
+			},
+			{
+				"inputs": [],
+				"name": "UserProfileManager__NotInitializing",
+				"type": "error"
+			},
+			{
+				"inputs": [],
+				"name": "UserProfileManager__ProfileNotFound",
+				"type": "error"
+			},
+			{
+				"inputs": [],
+				"name": "UserProfileManager__UnauthorizedCaller",
 				"type": "error"
 			},
 			{
@@ -89,14 +104,52 @@
 				"inputs": [
 					{
 						"indexed": true,
-						"internalType": "uint128",
-						"name": "restaurantId",
-						"type": "uint128"
+						"internalType": "address",
+						"name": "user",
+						"type": "address"
 					},
+					{
+						"indexed": false,
+						"internalType": "bool",
+						"name": "isActive",
+						"type": "bool"
+					}
+				],
+				"name": "UserProfileActivityChanged",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
 					{
 						"indexed": true,
 						"internalType": "address",
-						"name": "owner",
+						"name": "user",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "string",
+						"name": "name",
+						"type": "string"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint128",
+						"name": "registrationDate",
+						"type": "uint128"
+					}
+				],
+				"name": "UserProfileCreated",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "user",
 						"type": "address"
 					},
 					{
@@ -106,8 +159,67 @@
 						"type": "string"
 					}
 				],
-				"name": "RestaurantRegistered",
+				"name": "UserProfileUpdated",
 				"type": "event"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "user",
+						"type": "address"
+					}
+				],
+				"name": "activateUserProfile",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "user",
+						"type": "address"
+					},
+					{
+						"internalType": "string",
+						"name": "name",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "phoneNumber",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "email",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "imageUrl",
+						"type": "string"
+					}
+				],
+				"name": "createOrUpdateUserProfile",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "user",
+						"type": "address"
+					}
+				],
+				"name": "deactivateUserProfile",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
 			},
 			{
 				"inputs": [],
@@ -125,17 +237,54 @@
 			{
 				"inputs": [
 					{
-						"internalType": "uint128",
-						"name": "restaurantId",
-						"type": "uint128"
+						"internalType": "address",
+						"name": "user",
+						"type": "address"
 					}
 				],
-				"name": "getRestaurantOwner",
+				"name": "getUserProfile",
 				"outputs": [
 					{
-						"internalType": "address",
-						"name": "",
-						"type": "address"
+						"components": [
+							{
+								"internalType": "address",
+								"name": "userAddress",
+								"type": "address"
+							},
+							{
+								"internalType": "string",
+								"name": "name",
+								"type": "string"
+							},
+							{
+								"internalType": "string",
+								"name": "phoneNumber",
+								"type": "string"
+							},
+							{
+								"internalType": "string",
+								"name": "email",
+								"type": "string"
+							},
+							{
+								"internalType": "string",
+								"name": "imageUrl",
+								"type": "string"
+							},
+							{
+								"internalType": "bool",
+								"name": "isActive",
+								"type": "bool"
+							},
+							{
+								"internalType": "uint128",
+								"name": "registrationDate",
+								"type": "uint128"
+							}
+						],
+						"internalType": "struct UserProfile",
+						"name": "profile",
+						"type": "tuple"
 					}
 				],
 				"stateMutability": "view",
@@ -150,26 +299,13 @@
 					},
 					{
 						"internalType": "address",
-						"name": "_factoryOwner",
+						"name": "_initialOwner",
 						"type": "address"
 					}
 				],
 				"name": "initialize",
 				"outputs": [],
 				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"inputs": [],
-				"name": "nextRestaurantId",
-				"outputs": [
-					{
-						"internalType": "uint128",
-						"name": "",
-						"type": "uint128"
-					}
-				],
-				"stateMutability": "view",
 				"type": "function"
 			},
 			{
@@ -186,101 +322,10 @@
 				"type": "function"
 			},
 			{
-				"inputs": [
-					{
-						"internalType": "address",
-						"name": "restaurantActualOwner",
-						"type": "address"
-					}
-				],
-				"name": "registerRestaurant",
-				"outputs": [
-					{
-						"internalType": "uint128",
-						"name": "",
-						"type": "uint128"
-					}
-				],
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
 				"inputs": [],
 				"name": "renounceOwnership",
 				"outputs": [],
 				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "uint128",
-						"name": "restaurantId",
-						"type": "uint128"
-					}
-				],
-				"name": "restaurantExists",
-				"outputs": [
-					{
-						"internalType": "bool",
-						"name": "",
-						"type": "bool"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "uint128",
-						"name": "",
-						"type": "uint128"
-					}
-				],
-				"name": "restaurants",
-				"outputs": [
-					{
-						"internalType": "uint128",
-						"name": "id",
-						"type": "uint128"
-					},
-					{
-						"internalType": "address",
-						"name": "owner",
-						"type": "address"
-					},
-					{
-						"internalType": "string",
-						"name": "name",
-						"type": "string"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "address",
-						"name": "",
-						"type": "address"
-					},
-					{
-						"internalType": "uint256",
-						"name": "",
-						"type": "uint256"
-					}
-				],
-				"name": "restaurantsByOwner",
-				"outputs": [
-					{
-						"internalType": "uint128",
-						"name": "",
-						"type": "uint128"
-					}
-				],
-				"stateMutability": "view",
 				"type": "function"
 			},
 			{
@@ -294,6 +339,25 @@
 				"name": "transferOwnership",
 				"outputs": [],
 				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "user",
+						"type": "address"
+					}
+				],
+				"name": "userProfileExists",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
 				"type": "function"
 			}
 		],
@@ -347,7 +411,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"contracts/RestaurantManager.sol": "RestaurantManager"
+			"contracts/UserProfileManager.sol": "UserProfileManager"
 		},
 		"evmVersion": "prague",
 		"libraries": {},
@@ -385,20 +449,20 @@
 				"dweb:/ipfs/QmPKn6EYDgpga7KtpkA8wV2yJCYGMtc9K4LkJfhKX2RVSV"
 			]
 		},
-		"contracts/RestaurantManager.sol": {
-			"keccak256": "0x6defbdc838a69f4292aff5fbc8b70a0002ef526e59c1d9243d4f0618a9fbf471",
+		"contracts/UserProfileManager.sol": {
+			"keccak256": "0x0d1cb7e6879e1356ee0c0cbf357a79bbca923f019680c9e54f91581247b85749",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://cc1c46f3aa16075dd4d188a30d17abde3b107d614d56c050576d5227494a763d",
-				"dweb:/ipfs/QmdU9vpbJszN1wYYpgdKAP1E5mgcb3wxCLxQtChUVkCeGZ"
+				"bzz-raw://cf8a482c11c2aa325fb7c95de94ec7e497e100699d848a47394d28553f24999b",
+				"dweb:/ipfs/QmY58X9YuSLDQwjx42kgEXC88fQf8juUBAG3TyVdonTiLf"
 			]
 		},
-		"interfaces/IRestaurantManager.sol": {
-			"keccak256": "0x22ca1799f272451d7fde6d062136cd6ba18b3d08dc908110b539fbf760c2e0aa",
+		"interfaces/IUserProfileManager.sol": {
+			"keccak256": "0xd5c36f88459e330b492c1b37ddaca84156d478a14df430efbecbbeac24d0187a",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://15001a58d19086f0b3f90f4affed8750585833a6f92227b1539976b7ed0017d9",
-				"dweb:/ipfs/QmYocY1ei98wtd38FWKtKd8BXozFYtKKC7wQpJtxNpUhaF"
+				"bzz-raw://5b642e3c3bb630bfcae0349f51e416f9e7bb5f18388bddfec18c5c3d3733f1a8",
+				"dweb:/ipfs/QmdKqP5NsKc8S2pJefDGtHyKri3hkoeWMJWWemVKQhXgXo"
 			]
 		},
 		"structs/FoodTypes.sol": {

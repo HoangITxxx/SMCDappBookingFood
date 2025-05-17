@@ -11,6 +11,8 @@ import "../interfaces/IRestaurantManager.sol";
 contract OrderManager is OwnableUpgradeable, IOrderManager, ReentrancyGuard {
     uint128 public nextOrderId;
     mapping(uint128 => Order) public orders;
+    mapping(address => uint128[]) internal customerOrderIds;
+
 
     IMenuManager public menuManager;
     IRestaurantManager public restaurantManager;
@@ -38,6 +40,9 @@ contract OrderManager is OwnableUpgradeable, IOrderManager, ReentrancyGuard {
     error OrderManager__CallerNotRestaurantStaff(address caller, uint128 orderRestaurantId, uint128 staffRestaurantId);
     error OrderManager__PlatformFeeTooHigh(uint256 feePercent);
     error OrderManager__RestaurantOwnerNotFound(uint128 restaurantId);
+    error OrderManager__ItemSoldOut(uint128 menuItemId);
+    error OrderManager__InvalidPagination();
+    error OrderManager__RestaurantNotFound();
 
     modifier onlyFoodAppContract() {
         if (msg.sender != foodAppContractAddress) revert OrderManager__NotFoodApp();
@@ -73,42 +78,50 @@ contract OrderManager is OwnableUpgradeable, IOrderManager, ReentrancyGuard {
         uint128[] memory itemIds,
         uint128[] memory quantities
     ) external payable override onlyFoodAppContract nonReentrant {
+        // Kiểm tra nhà hàng tồn tại
+        if (!restaurantManager.restaurantExists(restaurantId)) revert OrderManager__RestaurantNotFound();
+        // Kiểm tra dữ liệu đầu vào
         if (itemIds.length != quantities.length || itemIds.length == 0) revert OrderManager__InvalidOrderData();
         if (customerEoa == address(0)) revert OrderManager__InvalidAddress();
 
         uint256 calculatedTotalPrice = 0;
         uint128 maxPreparationTime = 0;
-        OrderItemDetail[] memory orderItemsMemory = new OrderItemDetail[](itemIds.length); // Mảng memory
+        uint128 totalQuantity = 0; // Tổng số lượng món trong đơn hàng
+        OrderItemDetail[] memory orderItemsMemory = new OrderItemDetail[](itemIds.length);
 
+        // Duyệt qua danh sách món ăn
         for (uint128 i = 0; i < itemIds.length; i++) {
+            // Lấy thông tin món ăn từ MenuManager
             MenuItem memory item = menuManager.getMenuItem(restaurantId, itemIds[i]);
             if (item.id == 0) revert OrderManager__MenuItemNotFound(restaurantId, itemIds[i]);
             if (!item.available) revert OrderManager__MenuItemNotAvailable(itemIds[i]);
             if (quantities[i] == 0) revert OrderManager__InvalidOrderData();
 
+            // Tính tổng giá và tổng số lượng
             calculatedTotalPrice += uint256(item.price) * quantities[i];
+            totalQuantity += quantities[i];
+            // Lấy thời gian chuẩn bị lâu nhất
             if (item.preparationTime > maxPreparationTime) {
                 maxPreparationTime = item.preparationTime;
             }
-            orderItemsMemory[i] = OrderItemDetail({ // Gán vào mảng memory
+            // Lưu thông tin món ăn vào OrderItemDetail
+            orderItemsMemory[i] = OrderItemDetail({
                 menuItemId: item.id,
                 name: item.name,
                 pricePerUnit: item.price,
                 quantity: quantities[i]
             });
         }
-
+        // Kiểm tra thanh toán
         if (msg.value < calculatedTotalPrice) revert OrderManager__InsufficientPayment(calculatedTotalPrice, msg.value);
-
+        // Hoàn tiền thừa (nếu có)
         if (msg.value > calculatedTotalPrice) {
             (bool success,) = payable(customerEoa).call{value: msg.value - calculatedTotalPrice}("");
             if (!success) revert OrderManager__TransferFailed();
         }
-
+        // Tạo đơn hàng mới
         uint128 currentOrderId = nextOrderId;
-
-        // Tạo Order struct trong storage và gán các trường không phải mảng struct trước
-        Order storage newOrder = orders[currentOrderId]; // Lấy tham chiếu storage
+        Order storage newOrder = orders[currentOrderId];
         newOrder.id = currentOrderId;
         newOrder.customer = customerEoa;
         newOrder.restaurantId = restaurantId;
@@ -116,21 +129,18 @@ contract OrderManager is OwnableUpgradeable, IOrderManager, ReentrancyGuard {
         newOrder.status = OrderStatus.Placed;
         newOrder.timestamp = uint128(block.timestamp);
         newOrder.preparationTime = maxPreparationTime;
-        // newOrder.itemsDetail sẽ là một mảng rỗng trong storage tại thời điểm này
+        newOrder.quantity = totalQuantity; // Lưu tổng số lượng món
 
+        // Lưu danh sách món ăn vào đơn hàng
         for (uint i = 0; i < orderItemsMemory.length; i++) {
-            newOrder.itemsDetail.push(orderItemsMemory[i]); // Push từng OrderItemDetail vào itemsDetail của newOrder
+            newOrder.itemsDetail.push(orderItemsMemory[i]);
         }
-
+        // Lưu orderId vào danh sách đơn hàng của khách hàng
+        customerOrderIds[customerEoa].push(currentOrderId);
+        // Phát sự kiện
         emit OrderPlaced(currentOrderId, customerEoa, restaurantId, calculatedTotalPrice);
         nextOrderId++;
     }
-
-    // ... (các hàm còn lại: cancelOrder, completeOrder, updateOrderStatus, getOrder) ...
-    // Đảm bảo các hàm này cũng xử lý `orders[orderId]` một cách cẩn thận nếu chúng
-    // cần tạo hoặc sửa đổi các mảng struct phức tạp.
-    // Tuy nhiên, các hàm còn lại chủ yếu là đọc hoặc cập nhật các trường đơn giản,
-    // nên ít có khả năng gặp lỗi tương tự.
 
     function cancelOrder(address customerEoa, uint128 orderId) external override onlyFoodAppContract nonReentrant {
         Order storage orderToCancel = orders[orderId];
@@ -181,6 +191,10 @@ contract OrderManager is OwnableUpgradeable, IOrderManager, ReentrancyGuard {
             (bool success,) = payable(restaurantOwnerEoa).call{value: amountToRestaurant}("");
             if (!success) revert OrderManager__TransferFailed();
         }
+        if (feeAmount > 0) {
+            (bool feeSuccess, ) = payable(owner()).call{value: feeAmount}("");
+            if(!feeSuccess) revert OrderManager__TransferFailed(); 
+        }
 
         emit OrderCompleted(orderId, restaurantOwnerEoa, amountToRestaurant, feeAmount);
         emit OrderStatusUpdated(orderId, oldStatus, OrderStatus.Completed);
@@ -204,10 +218,46 @@ contract OrderManager is OwnableUpgradeable, IOrderManager, ReentrancyGuard {
         orderToUpdate.status = newStatus;
         emit OrderStatusUpdated(orderId, oldStatus, newStatus);
     }
-
+//============= View Order ======================
     function getOrder(uint128 orderId) external view override returns (Order memory) {
         Order memory order = orders[orderId];
         if (order.id == 0) revert OrderManager__OrderNotFound(orderId);
         return order;
+    }
+
+    function getOrdersByCustomer(address customerEoa, uint256 startIndex, uint256 limit) external view override returns (Order[] memory ordersAn, uint256 nextStartIndex) {
+        if (customerEoa == address(0)) revert OrderManager__InvalidAddress();
+        if (limit == 0) revert OrderManager__InvalidPagination();
+
+        uint128[] storage customerSpecificOrderIds = customerOrderIds[customerEoa];
+        uint256 totalOrders = customerSpecificOrderIds.length;
+
+        if (startIndex >= totalOrders) {
+            return (new Order[](0), 0); 
+        }
+
+        uint256 endIndex = startIndex + limit;
+        if (endIndex > totalOrders) {
+            endIndex = totalOrders;
+        }
+
+        uint256 resultCount = endIndex - startIndex;
+        ordersAn = new Order[](resultCount);
+
+        for (uint256 i = 0; i < resultCount; i++) {
+            ordersAn[i] = orders[customerSpecificOrderIds[startIndex + i]];
+        }
+
+        if (endIndex < totalOrders) {
+            nextStartIndex = endIndex;
+        } else {
+            nextStartIndex = 0; 
+        }
+        return (ordersAn, nextStartIndex);
+    }
+
+    function getOrderCountByCustomer(address customerEoa) external view override returns (uint256) {
+        if (customerEoa == address(0)) revert OrderManager__InvalidAddress();
+        return customerOrderIds[customerEoa].length;
     }
 }

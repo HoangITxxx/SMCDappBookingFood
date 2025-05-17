@@ -52,6 +52,8 @@
 			"cancelOrder(address,uint128)": "1b4257f6",
 			"completeOrder(address,uint128,uint128)": "cf31fb46",
 			"getOrder(uint128)": "117d4128",
+			"getOrderCountByCustomer(address)": "7338c5aa",
+			"getOrdersByCustomer(address,uint256,uint256)": "2fae2095",
 			"initialize(address,address,address,address)": "f8c8765e",
 			"placeOrder(address,uint128,uint128[],uint128[])": "c60c14d9",
 			"updateOrderStatus(address,uint128,uint8,uint128)": "19c8ccef"
@@ -172,11 +174,138 @@
 							"internalType": "uint128",
 							"name": "preparationTime",
 							"type": "uint128"
+						},
+						{
+							"internalType": "uint128",
+							"name": "quantity",
+							"type": "uint128"
 						}
 					],
 					"internalType": "struct Order",
 					"name": "",
 					"type": "tuple"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "address",
+					"name": "customerEoa",
+					"type": "address"
+				}
+			],
+			"name": "getOrderCountByCustomer",
+			"outputs": [
+				{
+					"internalType": "uint256",
+					"name": "",
+					"type": "uint256"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "address",
+					"name": "customerEoa",
+					"type": "address"
+				},
+				{
+					"internalType": "uint256",
+					"name": "startIndex",
+					"type": "uint256"
+				},
+				{
+					"internalType": "uint256",
+					"name": "limit",
+					"type": "uint256"
+				}
+			],
+			"name": "getOrdersByCustomer",
+			"outputs": [
+				{
+					"components": [
+						{
+							"internalType": "uint128",
+							"name": "id",
+							"type": "uint128"
+						},
+						{
+							"internalType": "address",
+							"name": "customer",
+							"type": "address"
+						},
+						{
+							"internalType": "uint128",
+							"name": "restaurantId",
+							"type": "uint128"
+						},
+						{
+							"components": [
+								{
+									"internalType": "uint128",
+									"name": "menuItemId",
+									"type": "uint128"
+								},
+								{
+									"internalType": "string",
+									"name": "name",
+									"type": "string"
+								},
+								{
+									"internalType": "uint128",
+									"name": "pricePerUnit",
+									"type": "uint128"
+								},
+								{
+									"internalType": "uint128",
+									"name": "quantity",
+									"type": "uint128"
+								}
+							],
+							"internalType": "struct OrderItemDetail[]",
+							"name": "itemsDetail",
+							"type": "tuple[]"
+						},
+						{
+							"internalType": "uint256",
+							"name": "totalPrice",
+							"type": "uint256"
+						},
+						{
+							"internalType": "enum OrderStatus",
+							"name": "status",
+							"type": "uint8"
+						},
+						{
+							"internalType": "uint128",
+							"name": "timestamp",
+							"type": "uint128"
+						},
+						{
+							"internalType": "uint128",
+							"name": "preparationTime",
+							"type": "uint128"
+						},
+						{
+							"internalType": "uint128",
+							"name": "quantity",
+							"type": "uint128"
+						}
+					],
+					"internalType": "struct Order[]",
+					"name": "ordersAn",
+					"type": "tuple[]"
+				},
+				{
+					"internalType": "uint256",
+					"name": "nextStartIndex",
+					"type": "uint256"
 				}
 			],
 			"stateMutability": "view",

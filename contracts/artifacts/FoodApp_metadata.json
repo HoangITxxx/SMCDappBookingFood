@@ -28,6 +28,11 @@
 			},
 			{
 				"inputs": [],
+				"name": "FoodApp__InvalidOrderData",
+				"type": "error"
+			},
+			{
+				"inputs": [],
 				"name": "FoodApp__InvalidRestaurantId",
 				"type": "error"
 			},
@@ -54,6 +59,33 @@
 				"type": "error"
 			},
 			{
+				"inputs": [
+					{
+						"internalType": "uint128",
+						"name": "menuItemId",
+						"type": "uint128"
+					}
+				],
+				"name": "FoodApp__MenuItemNotAvailable",
+				"type": "error"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint128",
+						"name": "restaurantId",
+						"type": "uint128"
+					},
+					{
+						"internalType": "uint128",
+						"name": "menuItemId",
+						"type": "uint128"
+					}
+				],
+				"name": "FoodApp__MenuItemNotFound",
+				"type": "error"
+			},
+			{
 				"inputs": [],
 				"name": "FoodApp__NotAuthorized",
 				"type": "error"
@@ -61,6 +93,11 @@
 			{
 				"inputs": [],
 				"name": "FoodApp__NotRestaurantStaff",
+				"type": "error"
+			},
+			{
+				"inputs": [],
+				"name": "FoodApp__UserProfileManagerNotSet",
 				"type": "error"
 			},
 			{
@@ -119,6 +156,11 @@
 			{
 				"inputs": [],
 				"name": "RoleAccess__NotAdmin",
+				"type": "error"
+			},
+			{
+				"inputs": [],
+				"name": "RoleAccess__NotFoodApp",
 				"type": "error"
 			},
 			{
@@ -330,6 +372,25 @@
 					{
 						"indexed": true,
 						"internalType": "address",
+						"name": "staffAccount",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "string",
+						"name": "staffName",
+						"type": "string"
+					}
+				],
+				"name": "StaffProfileCreatedOrUpdated",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
 						"name": "staff",
 						"type": "address"
 					},
@@ -358,6 +419,11 @@
 					{
 						"internalType": "string",
 						"name": "menuTitle",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "imageUrl",
 						"type": "string"
 					},
 					{
@@ -402,6 +468,26 @@
 						"internalType": "enum RoleAccess.Role",
 						"name": "staffRole",
 						"type": "uint8"
+					},
+					{
+						"internalType": "string",
+						"name": "staffName",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "staffPhoneNumber",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "staffEmail",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "staffImageUrl",
+						"type": "string"
 					}
 				],
 				"name": "assignStaffMemberToRestaurant",
@@ -488,6 +574,13 @@
 			},
 			{
 				"inputs": [],
+				"name": "deployUserProfileManager",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
 				"name": "factory",
 				"outputs": [
 					{
@@ -500,13 +593,148 @@
 				"type": "function"
 			},
 			{
-				"inputs": [],
-				"name": "foodApp",
+				"inputs": [
+					{
+						"internalType": "uint128",
+						"name": "restaurantId",
+						"type": "uint128"
+					}
+				],
+				"name": "getAllMenuItemIdsOfRestaurant",
 				"outputs": [
 					{
-						"internalType": "address",
+						"internalType": "uint128[]",
 						"name": "",
+						"type": "uint128[]"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint128",
+						"name": "restaurantId",
+						"type": "uint128"
+					}
+				],
+				"name": "getAllMenuItemsOfRestaurant",
+				"outputs": [
+					{
+						"components": [
+							{
+								"internalType": "uint128",
+								"name": "id",
+								"type": "uint128"
+							},
+							{
+								"internalType": "uint128",
+								"name": "restaurantId",
+								"type": "uint128"
+							},
+							{
+								"internalType": "string",
+								"name": "name",
+								"type": "string"
+							},
+							{
+								"internalType": "string",
+								"name": "menuTitle",
+								"type": "string"
+							},
+							{
+								"internalType": "string",
+								"name": "imageUrl",
+								"type": "string"
+							},
+							{
+								"internalType": "uint128",
+								"name": "price",
+								"type": "uint128"
+							},
+							{
+								"internalType": "bool",
+								"name": "available",
+								"type": "bool"
+							},
+							{
+								"internalType": "string",
+								"name": "description",
+								"type": "string"
+							},
+							{
+								"internalType": "string",
+								"name": "category",
+								"type": "string"
+							},
+							{
+								"internalType": "uint128",
+								"name": "totalRating",
+								"type": "uint128"
+							},
+							{
+								"internalType": "uint128",
+								"name": "ratingCount",
+								"type": "uint128"
+							},
+							{
+								"internalType": "uint128",
+								"name": "preparationTime",
+								"type": "uint128"
+							}
+						],
+						"internalType": "struct MenuItem[]",
+						"name": "",
+						"type": "tuple[]"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint128",
+						"name": "menuItemId",
+						"type": "uint128"
+					}
+				],
+				"name": "getAverageMenuItemRating",
+				"outputs": [
+					{
+						"internalType": "uint128",
+						"name": "averageRating",
+						"type": "uint128"
+					},
+					{
+						"internalType": "uint128",
+						"name": "ratingCount",
+						"type": "uint128"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "staff",
 						"type": "address"
+					}
+				],
+				"name": "getAverageStaffRating",
+				"outputs": [
+					{
+						"internalType": "uint128",
+						"name": "averageRating",
+						"type": "uint128"
+					},
+					{
+						"internalType": "uint128",
+						"name": "ratingCount",
+						"type": "uint128"
 					}
 				],
 				"stateMutability": "view",
@@ -585,6 +813,11 @@
 								"internalType": "uint128",
 								"name": "preparationTime",
 								"type": "uint128"
+							},
+							{
+								"internalType": "uint128",
+								"name": "quantity",
+								"type": "uint128"
 							}
 						],
 						"internalType": "struct Order",
@@ -630,6 +863,11 @@
 							{
 								"internalType": "string",
 								"name": "menuTitle",
+								"type": "string"
+							},
+							{
+								"internalType": "string",
+								"name": "imageUrl",
 								"type": "string"
 							},
 							{
@@ -679,19 +917,365 @@
 			{
 				"inputs": [
 					{
+						"internalType": "uint128",
+						"name": "menuItemId",
+						"type": "uint128"
+					}
+				],
+				"name": "getMenuItemReviews",
+				"outputs": [
+					{
+						"components": [
+							{
+								"internalType": "uint128",
+								"name": "id",
+								"type": "uint128"
+							},
+							{
+								"internalType": "address",
+								"name": "customer",
+								"type": "address"
+							},
+							{
+								"internalType": "uint128",
+								"name": "menuItemId",
+								"type": "uint128"
+							},
+							{
+								"internalType": "uint128",
+								"name": "restaurantId",
+								"type": "uint128"
+							},
+							{
+								"internalType": "uint8",
+								"name": "rating",
+								"type": "uint8"
+							},
+							{
+								"internalType": "string",
+								"name": "comment",
+								"type": "string"
+							},
+							{
+								"internalType": "uint128",
+								"name": "timestamp",
+								"type": "uint128"
+							}
+						],
+						"internalType": "struct MenuItemReview[]",
+						"name": "",
+						"type": "tuple[]"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "getMyOrderCount",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "startIndex",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "limit",
+						"type": "uint256"
+					}
+				],
+				"name": "getMyOrders",
+				"outputs": [
+					{
+						"components": [
+							{
+								"internalType": "uint128",
+								"name": "id",
+								"type": "uint128"
+							},
+							{
+								"internalType": "address",
+								"name": "customer",
+								"type": "address"
+							},
+							{
+								"internalType": "uint128",
+								"name": "restaurantId",
+								"type": "uint128"
+							},
+							{
+								"components": [
+									{
+										"internalType": "uint128",
+										"name": "menuItemId",
+										"type": "uint128"
+									},
+									{
+										"internalType": "string",
+										"name": "name",
+										"type": "string"
+									},
+									{
+										"internalType": "uint128",
+										"name": "pricePerUnit",
+										"type": "uint128"
+									},
+									{
+										"internalType": "uint128",
+										"name": "quantity",
+										"type": "uint128"
+									}
+								],
+								"internalType": "struct OrderItemDetail[]",
+								"name": "itemsDetail",
+								"type": "tuple[]"
+							},
+							{
+								"internalType": "uint256",
+								"name": "totalPrice",
+								"type": "uint256"
+							},
+							{
+								"internalType": "enum OrderStatus",
+								"name": "status",
+								"type": "uint8"
+							},
+							{
+								"internalType": "uint128",
+								"name": "timestamp",
+								"type": "uint128"
+							},
+							{
+								"internalType": "uint128",
+								"name": "preparationTime",
+								"type": "uint128"
+							},
+							{
+								"internalType": "uint128",
+								"name": "quantity",
+								"type": "uint128"
+							}
+						],
+						"internalType": "struct Order[]",
+						"name": "ordersAn",
+						"type": "tuple[]"
+					},
+					{
+						"internalType": "uint256",
+						"name": "nextStartIndex",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
 						"internalType": "address",
-						"name": "account",
+						"name": "customerEoa",
+						"type": "address"
+					}
+				],
+				"name": "getOrderCountForSpecificCustomer",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "customerEoa",
 						"type": "address"
 					},
 					{
-						"internalType": "enum RoleAccess.Role",
-						"name": "role",
-						"type": "uint8"
+						"internalType": "uint256",
+						"name": "startIndex",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "limit",
+						"type": "uint256"
 					}
 				],
-				"name": "grantAppRole",
-				"outputs": [],
-				"stateMutability": "nonpayable",
+				"name": "getOrdersForSpecificCustomer",
+				"outputs": [
+					{
+						"components": [
+							{
+								"internalType": "uint128",
+								"name": "id",
+								"type": "uint128"
+							},
+							{
+								"internalType": "address",
+								"name": "customer",
+								"type": "address"
+							},
+							{
+								"internalType": "uint128",
+								"name": "restaurantId",
+								"type": "uint128"
+							},
+							{
+								"components": [
+									{
+										"internalType": "uint128",
+										"name": "menuItemId",
+										"type": "uint128"
+									},
+									{
+										"internalType": "string",
+										"name": "name",
+										"type": "string"
+									},
+									{
+										"internalType": "uint128",
+										"name": "pricePerUnit",
+										"type": "uint128"
+									},
+									{
+										"internalType": "uint128",
+										"name": "quantity",
+										"type": "uint128"
+									}
+								],
+								"internalType": "struct OrderItemDetail[]",
+								"name": "itemsDetail",
+								"type": "tuple[]"
+							},
+							{
+								"internalType": "uint256",
+								"name": "totalPrice",
+								"type": "uint256"
+							},
+							{
+								"internalType": "enum OrderStatus",
+								"name": "status",
+								"type": "uint8"
+							},
+							{
+								"internalType": "uint128",
+								"name": "timestamp",
+								"type": "uint128"
+							},
+							{
+								"internalType": "uint128",
+								"name": "preparationTime",
+								"type": "uint128"
+							},
+							{
+								"internalType": "uint128",
+								"name": "quantity",
+								"type": "uint128"
+							}
+						],
+						"internalType": "struct Order[]",
+						"name": "ordersAn",
+						"type": "tuple[]"
+					},
+					{
+						"internalType": "uint256",
+						"name": "nextStartIndex",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint128",
+						"name": "restaurantId",
+						"type": "uint128"
+					}
+				],
+				"name": "getRestaurantOwner",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "staff",
+						"type": "address"
+					}
+				],
+				"name": "getStaffReviews",
+				"outputs": [
+					{
+						"components": [
+							{
+								"internalType": "uint128",
+								"name": "id",
+								"type": "uint128"
+							},
+							{
+								"internalType": "address",
+								"name": "customer",
+								"type": "address"
+							},
+							{
+								"internalType": "address",
+								"name": "staff",
+								"type": "address"
+							},
+							{
+								"internalType": "uint128",
+								"name": "restaurantId",
+								"type": "uint128"
+							},
+							{
+								"internalType": "uint8",
+								"name": "rating",
+								"type": "uint8"
+							},
+							{
+								"internalType": "string",
+								"name": "comment",
+								"type": "string"
+							},
+							{
+								"internalType": "uint128",
+								"name": "timestamp",
+								"type": "uint128"
+							}
+						],
+						"internalType": "struct StaffReview[]",
+						"name": "",
+						"type": "tuple[]"
+					}
+				],
+				"stateMutability": "view",
 				"type": "function"
 			},
 			{
@@ -707,7 +1291,7 @@
 						"type": "uint8"
 					}
 				],
-				"name": "grantRole",
+				"name": "grantAppRole",
 				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
@@ -800,6 +1384,11 @@
 						"type": "uint128"
 					},
 					{
+						"internalType": "uint128",
+						"name": "menuItemId",
+						"type": "uint128"
+					},
+					{
 						"internalType": "uint8",
 						"name": "rating",
 						"type": "uint8"
@@ -810,7 +1399,58 @@
 						"type": "string"
 					}
 				],
-				"name": "rateExistingRestaurant",
+				"name": "rateMenuItem",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint128",
+						"name": "restaurantId",
+						"type": "uint128"
+					},
+					{
+						"internalType": "uint8",
+						"name": "rating",
+						"type": "uint8"
+					},
+					{
+						"internalType": "string",
+						"name": "comment",
+						"type": "string"
+					}
+				],
+				"name": "rateRestaurant",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "staff",
+						"type": "address"
+					},
+					{
+						"internalType": "uint128",
+						"name": "restaurantId",
+						"type": "uint128"
+					},
+					{
+						"internalType": "uint8",
+						"name": "rating",
+						"type": "uint8"
+					},
+					{
+						"internalType": "string",
+						"name": "comment",
+						"type": "string"
+					}
+				],
+				"name": "rateStaff",
 				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
@@ -831,24 +1471,6 @@
 						"type": "uint128"
 					}
 				],
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "uint128",
-						"name": "restaurantId",
-						"type": "uint128"
-					},
-					{
-						"internalType": "uint128",
-						"name": "menuId",
-						"type": "uint128"
-					}
-				],
-				"name": "removeMenuItemFromRestaurant",
-				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
 			},
@@ -938,19 +1560,6 @@
 				"inputs": [
 					{
 						"internalType": "address",
-						"name": "account",
-						"type": "address"
-					}
-				],
-				"name": "revokeRole",
-				"outputs": [],
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "address",
 						"name": "",
 						"type": "address"
 					}
@@ -1006,49 +1615,71 @@
 			{
 				"inputs": [
 					{
-						"internalType": "uint128",
-						"name": "restaurantId",
-						"type": "uint128"
-					},
-					{
-						"internalType": "uint128",
-						"name": "menuId",
-						"type": "uint128"
-					},
-					{
-						"internalType": "string",
-						"name": "name",
-						"type": "string"
-					},
-					{
-						"internalType": "string",
-						"name": "menuTitle",
-						"type": "string"
-					},
-					{
-						"internalType": "uint128",
-						"name": "price",
-						"type": "uint128"
-					},
-					{
-						"internalType": "bool",
-						"name": "available",
-						"type": "bool"
-					},
-					{
-						"internalType": "string",
-						"name": "description",
-						"type": "string"
-					},
-					{
-						"internalType": "string",
-						"name": "category",
-						"type": "string"
-					},
-					{
-						"internalType": "uint128",
-						"name": "preparationTime",
-						"type": "uint128"
+						"components": [
+							{
+								"internalType": "uint128",
+								"name": "restaurantId",
+								"type": "uint128"
+							},
+							{
+								"internalType": "uint128",
+								"name": "menuId",
+								"type": "uint128"
+							},
+							{
+								"internalType": "string",
+								"name": "name",
+								"type": "string"
+							},
+							{
+								"internalType": "string",
+								"name": "menuTitle",
+								"type": "string"
+							},
+							{
+								"internalType": "string",
+								"name": "imageUrl",
+								"type": "string"
+							},
+							{
+								"internalType": "uint128",
+								"name": "price",
+								"type": "uint128"
+							},
+							{
+								"internalType": "bool",
+								"name": "available",
+								"type": "bool"
+							},
+							{
+								"internalType": "string",
+								"name": "description",
+								"type": "string"
+							},
+							{
+								"internalType": "string",
+								"name": "category",
+								"type": "string"
+							},
+							{
+								"internalType": "uint128",
+								"name": "preparationTime",
+								"type": "uint128"
+							},
+							{
+								"internalType": "uint128",
+								"name": "totalRating",
+								"type": "uint128"
+							},
+							{
+								"internalType": "uint128",
+								"name": "ratingCount",
+								"type": "uint128"
+							}
+						],
+						"internalType": "struct UpdateMenuItemParams",
+						"name": "params",
+						"type": "tuple"
 					}
 				],
 				"name": "updateMenuItemDetails",
@@ -1072,6 +1703,19 @@
 				"name": "updateStaffOrderStatus",
 				"outputs": [],
 				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "userProfileManager",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
 				"type": "function"
 			}
 		],
@@ -1127,14 +1771,14 @@
 		"compilationTarget": {
 			"contracts/FoodApp.sol": "FoodApp"
 		},
-		"evmVersion": "cancun",
+		"evmVersion": "prague",
 		"libraries": {},
 		"metadata": {
 			"bytecodeHash": "ipfs"
 		},
 		"optimizer": {
 			"enabled": true,
-			"runs": 0
+			"runs": 200
 		},
 		"remappings": []
 	},
@@ -1172,67 +1816,75 @@
 			]
 		},
 		"access/RoleAccess.sol": {
-			"keccak256": "0x18019bdf2815e03aa86e2a6aea2163068c67c57504a1c04b9e07dd513383e5aa",
+			"keccak256": "0x744c4f25231312fbb58f3e374800e4a7071b3ccae6bf27e1f0e3fa876ef6cdb0",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://72e7e9f9a61f4fd16190ce1c9e481b338bb28f7e610377a4fa288b11ca6734e5",
-				"dweb:/ipfs/QmVus8GCjMQcBJJP7UHsVkQETtroewNVgo2Uz3yAbLd7Bb"
+				"bzz-raw://5aaddba46dc7da9a16cedcf01a23a2730027713c9d422af74f4cc065b8c1dabb",
+				"dweb:/ipfs/QmQAdCfpeHtV2GBwc737TbT9B9MLLFu4YhxarwWoqn1PRc"
 			]
 		},
 		"contracts/FoodApp.sol": {
-			"keccak256": "0x6a9b3674994e6c6687152e96914bbd8dae592065fdaea83ea07c8266c97abe8a",
+			"keccak256": "0x921837324fb89742920c2f7f4faca01afae321241404c8e089387c19e074acca",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://bc8913d9705085e5710965e18f6e7cef61fe73fd0700df9c2628a98b2bf117bc",
-				"dweb:/ipfs/QmaPKK1ZiGQehdmTQiPHkmTxaxMgsx3qVpLJu5rAKz5x8F"
+				"bzz-raw://db73045ae1b61f440c837764d35dc43f44ab182fa7bda4e617d041dfa5c93ca2",
+				"dweb:/ipfs/QmNauQcEMBZ5iRwEdF3vS5sqVwC1DUam1zZP6326AVnjmg"
 			]
 		},
 		"contracts/FoodAppFactory.sol": {
-			"keccak256": "0xa014f2e97990e45350b8755d9f7b72686442cab9fd63ba8b77f9e21f6827c5ab",
+			"keccak256": "0xfe8a8c2e60d73cc866dee8e075165e38439d1a797f2c14a39d901d3e71ede7fa",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://462d0bbfe12cc5a23485744c12d6d6252fb6e4a09d29f33501a99773fec3c4eb",
-				"dweb:/ipfs/QmNX9pFYDbGAGX43kvuASkFBzaCeuXPACKstLXtshpd6hk"
+				"bzz-raw://ffde166c13ac161c743cdcf3fab7e60fd589e346345ee90052395f23279ce670",
+				"dweb:/ipfs/QmTc9X1zPt9zwrEyRH1XesLWRDvR5TnyESWeymfv2BGdbN"
 			]
 		},
 		"interfaces/IMenuManager.sol": {
-			"keccak256": "0x90556f4dbe85561f751ebbdca10991ee3e4c636143032071f361a323908d6c42",
+			"keccak256": "0x3eea07d91b37841658f9c350601814492ec1cd32ee838d168633414d3c35b641",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://2148671a70bccd6a4accc21a5d9877c5fe3065a38ed9b6819e24cfa9d887b915",
-				"dweb:/ipfs/QmbJVXoZVi65cuh9CAsRR9kVLoFwTdkNjKfrrR2oSnA6xN"
+				"bzz-raw://66d59c7fb8bd7de0711e83a1548e9b7ea69099ec0c594e836e632fcb8fdbbf6e",
+				"dweb:/ipfs/Qmd5G9A4jnjqXjpTy3T3gjSmztL6kS1ZUhQNn6NBDMLKSe"
 			]
 		},
 		"interfaces/IOrderManager.sol": {
-			"keccak256": "0xae368137a04a2d49047693f28ed425610dab3723e05f7b4d91caf74c91e0a5c1",
+			"keccak256": "0x3df6ca33d2b579c3cab5aa7811fb7070aa7527bdb7e8aeddb901f447f940e351",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://e839255bfc12390e052a4ceb1f6ad8980fa28fe07cd4852f2721aabac6cdc4b0",
-				"dweb:/ipfs/QmcbjDUHC2HvbJqWz8AU7mA3Yt6Hjco8qrWUXerty5bV84"
+				"bzz-raw://b33497e8a54e8232c688d79c8ee28e217bcf0847ab054d7fc90843179f0da70c",
+				"dweb:/ipfs/QmUfm8zahNMExoojHzcbsABSJEEkx4baD1qNyyfDmNv6iA"
 			]
 		},
 		"interfaces/IRestaurantManager.sol": {
-			"keccak256": "0xe572868e2dfa09ac691b403ae0fcbbb7846a373627e0b74468de10ac7450a247",
+			"keccak256": "0x22ca1799f272451d7fde6d062136cd6ba18b3d08dc908110b539fbf760c2e0aa",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://1d51c386edb0d6009819e8d0c40a28bbce427638e741ddc0c13afdf9d7167d2a",
-				"dweb:/ipfs/QmV3pHbZwAa52LBH2sZ3pbsDG74B7cvo1s4y36XDEhAaJ3"
+				"bzz-raw://15001a58d19086f0b3f90f4affed8750585833a6f92227b1539976b7ed0017d9",
+				"dweb:/ipfs/QmYocY1ei98wtd38FWKtKd8BXozFYtKKC7wQpJtxNpUhaF"
 			]
 		},
 		"interfaces/IReviewManager.sol": {
-			"keccak256": "0xcf085ff21dffe691f77b91df3617ed4572e606df180fd9da771ac3a6eba440db",
+			"keccak256": "0x1f47b2f1c3f7d467a4d7be735c50a992d6807613f1ea6ad0abac3327f11f521a",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://32631a103c0967c693c2c33261b58b21504213d7da73f7397dcfc85c0cd23bff",
-				"dweb:/ipfs/QmPQJUTLFyCLkr2mjDYyeeunTATtQ5xY3Yxn3ChQfji6tV"
+				"bzz-raw://c753dcda645c0ad6ef81485a247182a2b6dc93879237b2e86b158d8f413d72d7",
+				"dweb:/ipfs/QmXeL7J9esWdz3tvk7x82GwRbT8M6Py3HiaWYmnkUZvTL4"
+			]
+		},
+		"interfaces/IUserProfileManager.sol": {
+			"keccak256": "0xd5c36f88459e330b492c1b37ddaca84156d478a14df430efbecbbeac24d0187a",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://5b642e3c3bb630bfcae0349f51e416f9e7bb5f18388bddfec18c5c3d3733f1a8",
+				"dweb:/ipfs/QmdKqP5NsKc8S2pJefDGtHyKri3hkoeWMJWWemVKQhXgXo"
 			]
 		},
 		"structs/FoodTypes.sol": {
-			"keccak256": "0xa9f6f613e64860ea25991b52f37663ece0595e9b712737210da59fb36099f30e",
+			"keccak256": "0x9f1439f1525f5fd2f2f0e62993f7eaf75c3a8156d03cc5e7e57e250df4c230b1",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://5e2657d23632a43394aa9abcd1479e50eececd4030fa8d90654fe883a2fd41dd",
-				"dweb:/ipfs/QmRsw1fBjJUWsSbGAZmowruqPGBxWfMKaT7CAjeD5nppkt"
+				"bzz-raw://898d7add794b4fdc2ed8d8c5a1b79c7882bd42f81287f0f6eeabcddde379b5b9",
+				"dweb:/ipfs/QmPdyn4KAvAUFdU6xSaURqQ63Mfr1rwrHpJLgBL3Xo1efo"
 			]
 		}
 	},

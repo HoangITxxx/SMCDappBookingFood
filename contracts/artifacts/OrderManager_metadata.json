@@ -106,6 +106,22 @@
 				"type": "error"
 			},
 			{
+				"inputs": [],
+				"name": "OrderManager__InvalidPagination",
+				"type": "error"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint128",
+						"name": "menuItemId",
+						"type": "uint128"
+					}
+				],
+				"name": "OrderManager__ItemSoldOut",
+				"type": "error"
+			},
+			{
 				"inputs": [
 					{
 						"internalType": "uint128",
@@ -173,6 +189,11 @@
 					}
 				],
 				"name": "OrderManager__PlatformFeeTooHigh",
+				"type": "error"
+			},
+			{
+				"inputs": [],
+				"name": "OrderManager__RestaurantNotFound",
 				"type": "error"
 			},
 			{
@@ -508,11 +529,138 @@
 								"internalType": "uint128",
 								"name": "preparationTime",
 								"type": "uint128"
+							},
+							{
+								"internalType": "uint128",
+								"name": "quantity",
+								"type": "uint128"
 							}
 						],
 						"internalType": "struct Order",
 						"name": "",
 						"type": "tuple"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "customerEoa",
+						"type": "address"
+					}
+				],
+				"name": "getOrderCountByCustomer",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "customerEoa",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "startIndex",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "limit",
+						"type": "uint256"
+					}
+				],
+				"name": "getOrdersByCustomer",
+				"outputs": [
+					{
+						"components": [
+							{
+								"internalType": "uint128",
+								"name": "id",
+								"type": "uint128"
+							},
+							{
+								"internalType": "address",
+								"name": "customer",
+								"type": "address"
+							},
+							{
+								"internalType": "uint128",
+								"name": "restaurantId",
+								"type": "uint128"
+							},
+							{
+								"components": [
+									{
+										"internalType": "uint128",
+										"name": "menuItemId",
+										"type": "uint128"
+									},
+									{
+										"internalType": "string",
+										"name": "name",
+										"type": "string"
+									},
+									{
+										"internalType": "uint128",
+										"name": "pricePerUnit",
+										"type": "uint128"
+									},
+									{
+										"internalType": "uint128",
+										"name": "quantity",
+										"type": "uint128"
+									}
+								],
+								"internalType": "struct OrderItemDetail[]",
+								"name": "itemsDetail",
+								"type": "tuple[]"
+							},
+							{
+								"internalType": "uint256",
+								"name": "totalPrice",
+								"type": "uint256"
+							},
+							{
+								"internalType": "enum OrderStatus",
+								"name": "status",
+								"type": "uint8"
+							},
+							{
+								"internalType": "uint128",
+								"name": "timestamp",
+								"type": "uint128"
+							},
+							{
+								"internalType": "uint128",
+								"name": "preparationTime",
+								"type": "uint128"
+							},
+							{
+								"internalType": "uint128",
+								"name": "quantity",
+								"type": "uint128"
+							}
+						],
+						"internalType": "struct Order[]",
+						"name": "ordersAn",
+						"type": "tuple[]"
+					},
+					{
+						"internalType": "uint256",
+						"name": "nextStartIndex",
+						"type": "uint256"
 					}
 				],
 				"stateMutability": "view",
@@ -615,6 +763,11 @@
 					{
 						"internalType": "uint128",
 						"name": "preparationTime",
+						"type": "uint128"
+					},
+					{
+						"internalType": "uint128",
+						"name": "quantity",
 						"type": "uint128"
 					}
 				],
@@ -807,14 +960,14 @@
 		"compilationTarget": {
 			"contracts/OrderManager.sol": "OrderManager"
 		},
-		"evmVersion": "cancun",
+		"evmVersion": "prague",
 		"libraries": {},
 		"metadata": {
 			"bytecodeHash": "ipfs"
 		},
 		"optimizer": {
 			"enabled": true,
-			"runs": 0
+			"runs": 200
 		},
 		"remappings": []
 	},
@@ -852,43 +1005,43 @@
 			]
 		},
 		"contracts/OrderManager.sol": {
-			"keccak256": "0x1f02f7758be75e5d74158514b1bcab6dae87fabe166fc4e989a5576a55e46a3b",
+			"keccak256": "0x8ff0da9f10240290eeb2464da5d5febb878d9302054ba35af7734cda0e1432a1",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://82a34b1371d81a7f4efd276836e52f4ab5c91f82f4f8f89158cd06e2d003a767",
-				"dweb:/ipfs/QmPR3ds7G7svi2fycacg8t8ho37GgSA62X6RdW4gKzkSsH"
+				"bzz-raw://4c1d9e1fedab841123a36388000f553e8fec7f94df902b9062f85231da0b7a48",
+				"dweb:/ipfs/QmdKNwM5SjjaVLGLjpcJk63gB6paBiXrfDRiijzurNYouf"
 			]
 		},
 		"interfaces/IMenuManager.sol": {
-			"keccak256": "0x90556f4dbe85561f751ebbdca10991ee3e4c636143032071f361a323908d6c42",
+			"keccak256": "0xc63f43f0dcc5c87e6da7eb2518b2ff43d5d0d40043e1f036fd74f7318c7f109c",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://2148671a70bccd6a4accc21a5d9877c5fe3065a38ed9b6819e24cfa9d887b915",
-				"dweb:/ipfs/QmbJVXoZVi65cuh9CAsRR9kVLoFwTdkNjKfrrR2oSnA6xN"
+				"bzz-raw://bef36352eceaee618d4aa220f9b1e140a6fb1cb376c08c429d6a6a4c49dce8be",
+				"dweb:/ipfs/QmfFUueVAAp49CeDdV2UyGyfU9gr2BYLZid4cVm4k1ddde"
 			]
 		},
 		"interfaces/IOrderManager.sol": {
-			"keccak256": "0xae368137a04a2d49047693f28ed425610dab3723e05f7b4d91caf74c91e0a5c1",
+			"keccak256": "0x3df6ca33d2b579c3cab5aa7811fb7070aa7527bdb7e8aeddb901f447f940e351",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://e839255bfc12390e052a4ceb1f6ad8980fa28fe07cd4852f2721aabac6cdc4b0",
-				"dweb:/ipfs/QmcbjDUHC2HvbJqWz8AU7mA3Yt6Hjco8qrWUXerty5bV84"
+				"bzz-raw://b33497e8a54e8232c688d79c8ee28e217bcf0847ab054d7fc90843179f0da70c",
+				"dweb:/ipfs/QmUfm8zahNMExoojHzcbsABSJEEkx4baD1qNyyfDmNv6iA"
 			]
 		},
 		"interfaces/IRestaurantManager.sol": {
-			"keccak256": "0xe572868e2dfa09ac691b403ae0fcbbb7846a373627e0b74468de10ac7450a247",
+			"keccak256": "0x22ca1799f272451d7fde6d062136cd6ba18b3d08dc908110b539fbf760c2e0aa",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://1d51c386edb0d6009819e8d0c40a28bbce427638e741ddc0c13afdf9d7167d2a",
-				"dweb:/ipfs/QmV3pHbZwAa52LBH2sZ3pbsDG74B7cvo1s4y36XDEhAaJ3"
+				"bzz-raw://15001a58d19086f0b3f90f4affed8750585833a6f92227b1539976b7ed0017d9",
+				"dweb:/ipfs/QmYocY1ei98wtd38FWKtKd8BXozFYtKKC7wQpJtxNpUhaF"
 			]
 		},
 		"structs/FoodTypes.sol": {
-			"keccak256": "0xa9f6f613e64860ea25991b52f37663ece0595e9b712737210da59fb36099f30e",
+			"keccak256": "0x8d46fb9f22c1245e2342a15285e279e9e710baf057b6fbce0e2b10c4b9753371",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://5e2657d23632a43394aa9abcd1479e50eececd4030fa8d90654fe883a2fd41dd",
-				"dweb:/ipfs/QmRsw1fBjJUWsSbGAZmowruqPGBxWfMKaT7CAjeD5nppkt"
+				"bzz-raw://73d7e0d738b54e8812777058abe3b88d98ef3d4a91aacbf6d0ede3359a73a69e",
+				"dweb:/ipfs/QmWRjnoJTB55wHg55icrzwTY5wKDBFmg3DU8dyzN19Kt8g"
 			]
 		}
 	},

@@ -13,7 +13,7 @@
 						"type": "address"
 					},
 					{
-						"internalType": "enum RoleAccess.Role",
+						"internalType": "enum Role",
 						"name": "role",
 						"type": "uint8"
 					}
@@ -32,6 +32,11 @@
 				"type": "error"
 			},
 			{
+				"inputs": [],
+				"name": "RoleAccess__NotFoodApp",
+				"type": "error"
+			},
+			{
 				"inputs": [
 					{
 						"internalType": "address",
@@ -39,7 +44,7 @@
 						"type": "address"
 					},
 					{
-						"internalType": "enum RoleAccess.Role",
+						"internalType": "enum Role",
 						"name": "requiredRole",
 						"type": "uint8"
 					}
@@ -74,7 +79,7 @@
 					},
 					{
 						"indexed": true,
-						"internalType": "enum RoleAccess.Role",
+						"internalType": "enum Role",
 						"name": "role",
 						"type": "uint8"
 					}
@@ -93,7 +98,7 @@
 					},
 					{
 						"indexed": true,
-						"internalType": "enum RoleAccess.Role",
+						"internalType": "enum Role",
 						"name": "oldRole",
 						"type": "uint8"
 					}
@@ -152,30 +157,12 @@
 						"type": "uint128"
 					},
 					{
-						"internalType": "enum RoleAccess.Role",
+						"internalType": "enum Role",
 						"name": "staffRole",
 						"type": "uint8"
 					}
 				],
 				"name": "assignStaffToRestaurant",
-				"outputs": [],
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "address",
-						"name": "account",
-						"type": "address"
-					},
-					{
-						"internalType": "enum RoleAccess.Role",
-						"name": "role",
-						"type": "uint8"
-					}
-				],
-				"name": "grantRole",
 				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
@@ -202,13 +189,19 @@
 				"inputs": [
 					{
 						"internalType": "address",
-						"name": "account",
+						"name": "",
 						"type": "address"
 					}
 				],
-				"name": "revokeRole",
-				"outputs": [],
-				"stateMutability": "nonpayable",
+				"name": "roles",
+				"outputs": [
+					{
+						"internalType": "enum Role",
+						"name": "",
+						"type": "uint8"
+					}
+				],
+				"stateMutability": "view",
 				"type": "function"
 			},
 			{
@@ -217,14 +210,19 @@
 						"internalType": "address",
 						"name": "",
 						"type": "address"
+					},
+					{
+						"internalType": "uint128",
+						"name": "",
+						"type": "uint128"
 					}
 				],
-				"name": "roles",
+				"name": "staffAssignmentDates",
 				"outputs": [
 					{
-						"internalType": "enum RoleAccess.Role",
+						"internalType": "uint128",
 						"name": "",
-						"type": "uint8"
+						"type": "uint128"
 					}
 				],
 				"stateMutability": "view",
@@ -253,6 +251,30 @@
 				],
 				"stateMutability": "view",
 				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint128",
+						"name": "",
+						"type": "uint128"
+					},
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"name": "staffListByRestaurant",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
 			}
 		],
 		"devdoc": {
@@ -270,24 +292,32 @@
 		"compilationTarget": {
 			"access/RoleAccess.sol": "RoleAccess"
 		},
-		"evmVersion": "cancun",
+		"evmVersion": "prague",
 		"libraries": {},
 		"metadata": {
 			"bytecodeHash": "ipfs"
 		},
 		"optimizer": {
 			"enabled": true,
-			"runs": 0
+			"runs": 300
 		},
 		"remappings": []
 	},
 	"sources": {
 		"access/RoleAccess.sol": {
-			"keccak256": "0x50299f8e45c2720b60d073de6cd3c41986d4912588784b6af763b8f2973ff8ba",
+			"keccak256": "0x367412ca4809a65bb9cf11bb784ca55e161b1057ee1fbc47051ef6154a772b68",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://ce05bf72bc13efdae934eb8b5df65f3f5271d71c885fddd128569c15c53e6469",
-				"dweb:/ipfs/QmRCjYEivUXQEvmSN5iappn7EmQgzpZUHMiyzNRtEAc7em"
+				"bzz-raw://dc4c178edcc904607fb7e43fec7f53126100f7bd358ded9ea82b32c4defb58ef",
+				"dweb:/ipfs/QmSLJX6JJQqmHGHbEi9WjQNgnvVdZQWCtJP1bsc1JKmehu"
+			]
+		},
+		"structs/FoodTypes.sol": {
+			"keccak256": "0xdf7549b09cbeb2f9b7ae9bb070508253768f37f29456ae5b68fa45e2b8e4757f",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://60904b526c49ece21b558254c6d02583d114db46522d47a92c360774a6cfab8d",
+				"dweb:/ipfs/QmUVQtA7yQaxCdDU6YLiJJH1iopTt5JB8K6Ayw739dbCGw"
 			]
 		}
 	},

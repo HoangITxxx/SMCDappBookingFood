@@ -25,9 +25,8 @@ contract RestaurantManager is OwnableUpgradeable, IRestaurantManager {
 
     function initialize(address _foodAppContract, address _factoryOwner) public initializer {
         if (_foodAppContract == address(0)) revert RestaurantManager__InvalidAddress();
-        // _factoryOwner cũng không nên là address(0) nếu nó là owner
         if (_factoryOwner == address(0)) revert RestaurantManager__InvalidAddress();
-        __Ownable_init(_factoryOwner); // FoodAppFactory là owner
+        __Ownable_init(_factoryOwner); 
         foodAppContractAddress = _foodAppContract;
         nextRestaurantId = 1;
     }
@@ -40,7 +39,7 @@ contract RestaurantManager is OwnableUpgradeable, IRestaurantManager {
         restaurants[restaurantId] = Restaurant({
             id: restaurantId,
             owner: restaurantActualOwner,
-            name: "" // FoodApp sẽ gọi hàm khác để cập nhật tên/chi tiết
+            name: "" 
         });
         restaurantsByOwner[restaurantActualOwner].push(restaurantId);
 
