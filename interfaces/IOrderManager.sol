@@ -12,5 +12,7 @@ interface IOrderManager {
     function getOrder(uint128 orderId) external view returns (Order memory);
     function getOrdersByCustomer(address customerEoa, uint256 startIndex, uint256 limit) external view returns (Order[] memory ordersAn, uint256 nextStartIndex);
     function getOrderCountByCustomer(address customerEoa) external view returns (uint256);
+    function getCompletedOrderItemCount(uint128 _restaurantId, uint128 _menuItemId) external view returns (uint256);
+    function getRestaurantCompletedMenuItemIds(uint128 _restaurantId) external view returns (uint128[] memory);
 
 }

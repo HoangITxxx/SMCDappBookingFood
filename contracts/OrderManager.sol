@@ -13,6 +13,10 @@ contract OrderManager is OwnableUpgradeable, IOrderManager, ReentrancyGuard {
     mapping(uint128 => Order) public orders;
     mapping(address => uint128[]) internal customerOrderIds;
 
+    mapping(uint128 => mapping(uint128 => uint256)) public completedOrderItemCount;
+    mapping(uint128 => uint128[]) public restaurantCompletedMenuItems;
+    mapping(uint128 => mapping(uint128 => bool)) private _isMenuItemInCompletedList;
+
 
     IMenuManager public menuManager;
     IRestaurantManager public restaurantManager;
@@ -195,9 +199,23 @@ contract OrderManager is OwnableUpgradeable, IOrderManager, ReentrancyGuard {
             (bool feeSuccess, ) = payable(owner()).call{value: feeAmount}("");
             if(!feeSuccess) revert OrderManager__TransferFailed(); 
         }
+        if (oldStatus != OrderStatus.Completed) {
+            for (uint i = 0; i < orderToComplete.itemsDetail.length; i++) {
+                OrderItemDetail memory itemDetail = orderToComplete.itemsDetail[i];
+
+                completedOrderItemCount[orderToComplete.restaurantId][itemDetail.menuItemId] += itemDetail.quantity;
+
+                if (!_isMenuItemInCompletedList[orderToComplete.restaurantId][itemDetail.menuItemId]) {
+                    restaurantCompletedMenuItems[orderToComplete.restaurantId].push(itemDetail.menuItemId);
+                    _isMenuItemInCompletedList[orderToComplete.restaurantId][itemDetail.menuItemId] = true;
+                }
+            }
+        }
 
         emit OrderCompleted(orderId, restaurantOwnerEoa, amountToRestaurant, feeAmount);
-        emit OrderStatusUpdated(orderId, oldStatus, OrderStatus.Completed);
+        if (oldStatus != OrderStatus.Completed) {
+            emit OrderStatusUpdated(orderId, oldStatus, OrderStatus.Completed);
+        }
     }
 
     function updateOrderStatus(address staffEoa, uint128 orderId, OrderStatus newStatus, uint128 staffRestaurantId) external override onlyFoodAppContract {
@@ -260,4 +278,19 @@ contract OrderManager is OwnableUpgradeable, IOrderManager, ReentrancyGuard {
         if (customerEoa == address(0)) revert OrderManager__InvalidAddress();
         return customerOrderIds[customerEoa].length;
     }
+
+    function getCompletedOrderItemCount(uint128 _restaurantId, uint128 _menuItemId)
+        external view override
+            returns (uint256)
+        {
+            return completedOrderItemCount[_restaurantId][_menuItemId];
+        }
+
+    function getRestaurantCompletedMenuItemIds(uint128 _restaurantId)
+        external view override
+            returns (uint128[] memory)
+        {
+            return restaurantCompletedMenuItems[_restaurantId];
+        }
+    
 }

@@ -54,6 +54,15 @@ struct Order {
     uint128 quantity;
 }
 
+struct SuggestedMenuItem {
+    uint128 menuItemId;
+    string name;
+    string imageUrl; 
+    uint128 price;    
+    string category;
+    uint256 completedOrderCount;
+}
+
 struct Restaurant {
     uint128 id;
     address owner; 

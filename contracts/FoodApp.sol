@@ -77,7 +77,6 @@ contract FoodApp is OwnableUpgradeable, ReentrancyGuardUpgradeable, RoleAccess {
         _;
     }
 
-
     // --- Initializer and Manager Deployment ---
     function initialize(address _appAdmin, address _factoryAddress) public initializer {
         __Ownable_init(_appAdmin); 
@@ -209,16 +208,16 @@ contract FoodApp is OwnableUpgradeable, ReentrancyGuardUpgradeable, RoleAccess {
         uint128[] memory quantities
     ) external payable onlyCustomerOrUpgrade nonReentrant {
         if (orderManager == address(0)) revert FoodApp__ManagerNotSet("OrderManager");
-    if (menuManager == address(0)) revert FoodApp__ManagerNotSet("MenuManager");
-    if (restaurantManager == address(0) || !IRestaurantManager(restaurantManager).restaurantExists(restaurantId)) {
-        revert FoodApp__InvalidRestaurantId();
-    }
-        for (uint i = 0; i < itemIds.length; i++) {
-        MenuItem memory item = IMenuManager(menuManager).getMenuItem(restaurantId, itemIds[i]);
-        if (item.id == 0) revert FoodApp__MenuItemNotFound(restaurantId, itemIds[i]);
-        if (!item.available) revert FoodApp__MenuItemNotAvailable(itemIds[i]);
-        if (quantities[i] == 0) revert FoodApp__InvalidOrderData();
-    }
+        // if (menuManager == address(0)) revert FoodApp__ManagerNotSet("MenuManager");
+        if (restaurantManager == address(0) || !IRestaurantManager(restaurantManager).restaurantExists(restaurantId)) {
+            revert FoodApp__InvalidRestaurantId();
+        }
+    //     for (uint i = 0; i < itemIds.length; i++) {
+    //     MenuItem memory item = IMenuManager(menuManager).getMenuItem(restaurantId, itemIds[i]);
+    //     if (item.id == 0) revert FoodApp__MenuItemNotFound(restaurantId, itemIds[i]);
+    //     if (!item.available) revert FoodApp__MenuItemNotAvailable(itemIds[i]);
+    //     if (quantities[i] == 0) revert FoodApp__InvalidOrderData();
+    // }
         IOrderManager(orderManager).placeOrder{value: msg.value}(msg.sender, restaurantId, itemIds, quantities);
     }
 
@@ -246,6 +245,69 @@ contract FoodApp is OwnableUpgradeable, ReentrancyGuardUpgradeable, RoleAccess {
         }
         IOrderManager(orderManager).updateOrderStatus(msg.sender, orderId, newStatus, order.restaurantId);
     }
+    // function getSuggestedMenuItemsByRestaurant(uint128 _restaurantId, uint256 maxItemsToReturn)
+    //     external view
+    //     returns (SuggestedMenuItem[] memory) 
+    // {
+    //     if (orderManager == address(0)) revert FoodApp__ManagerNotSet("OrderManager");
+    //     if (menuManager == address(0)) revert FoodApp__ManagerNotSet("MenuManager");
+    //     if (restaurantManager == address(0)) revert FoodApp__ManagerNotSet("RestaurantManager");
+    //     if (!IRestaurantManager(restaurantManager).restaurantExists(_restaurantId)) {
+    //         revert FoodApp__InvalidRestaurantId();
+    //     }
+    //     uint128[] memory completedItemIdsFromOrderManager = IOrderManager(orderManager).getRestaurantCompletedMenuItemIds(_restaurantId);
+
+    //     if (completedItemIdsFromOrderManager.length == 0) {
+    //         return new SuggestedMenuItem[](0);
+    //     }
+
+    //     uint256 internalProcessingLimit = 50; 
+    //     uint256 numIdsToProcess = completedItemIdsFromOrderManager.length;
+
+    //     if (maxItemsToReturn > 0 && maxItemsToReturn < numIdsToProcess) {
+    //         numIdsToProcess = maxItemsToReturn;
+    //     }
+    //     if (numIdsToProcess > internalProcessingLimit) {
+    //         numIdsToProcess = internalProcessingLimit;
+    //     }
+
+    //     SuggestedMenuItem[] memory tempSuggestedItems = new SuggestedMenuItem[](numIdsToProcess);
+    //     uint256 actualCount = 0; 
+
+    //     for (uint i = 0; i < numIdsToProcess; i++) { 
+    //         uint128 menuItemId = completedItemIdsFromOrderManager[i];
+
+    //         MenuItem memory itemInfo; 
+    //         bool menuItemExists = true;
+    //         try IMenuManager(menuManager).getMenuItem(_restaurantId, menuItemId) returns (MenuItem memory mi) {
+    //             itemInfo = mi;
+    //         } catch {
+    //             menuItemExists = false; 
+    //         }
+
+    //         if (menuItemExists && itemInfo.id != 0) { 
+    //             uint256 orderCount = IOrderManager(orderManager).getCompletedOrderItemCount(_restaurantId, menuItemId);
+
+    //             if (orderCount > 0) { 
+    //                 tempSuggestedItems[actualCount] = SuggestedMenuItem({
+    //                     menuItemId: itemInfo.id,
+    //                     name: itemInfo.name,
+    //                     imageUrl: itemInfo.imageUrl,
+    //                     price: itemInfo.price,
+    //                     category: itemInfo.category,
+    //                     completedOrderCount: orderCount
+    //                 });
+    //                 actualCount++;
+    //             }
+    //         }
+    //     }
+    //     SuggestedMenuItem[] memory finalSuggestedItems = new SuggestedMenuItem[](actualCount);
+    //     for (uint i = 0; i < actualCount; i++) {
+    //         finalSuggestedItems[i] = tempSuggestedItems[i];
+    //     }
+
+    //     return finalSuggestedItems;
+    // }
 //========= Hàm Rating ===================
     function rateRestaurant(uint128 restaurantId, uint8 rating, string memory comment) external onlyCustomer {
         if (reviewManager == address(0)) revert FoodApp__ManagerNotSet("ReviewManager");
@@ -389,73 +451,73 @@ contract FoodApp is OwnableUpgradeable, ReentrancyGuardUpgradeable, RoleAccess {
     }
 
 //===================== View User Profile Manager ====================================
-    function getStaffMemberDetails(address staffAccount, uint128 restaurantId)
-        external view
-        returns (StaffMemberDetails memory staffDetails)
-    {
-        if (staffAccount == address(0)) revert FoodApp__NotAuthorized();
-        if (userProfileManager == address(0)) revert FoodApp__UserProfileManagerNotSet();
-        if (restaurantManager == address(0)) revert FoodApp__ManagerNotSet("RestaurantManager");
+    // function getStaffMemberDetails(address staffAccount, uint128 restaurantId)
+    //     external view
+    //     returns (StaffMemberDetails memory staffDetails)
+    // {
+    //     if (staffAccount == address(0)) revert FoodApp__NotAuthorized();
+    //     if (userProfileManager == address(0)) revert FoodApp__UserProfileManagerNotSet();
+    //     if (restaurantManager == address(0)) revert FoodApp__ManagerNotSet("RestaurantManager");
 
-        if (!IRestaurantManager(restaurantManager).restaurantExists(restaurantId)) {
-            revert FoodApp__InvalidRestaurantId();
-        }
+    //     if (!IRestaurantManager(restaurantManager).restaurantExists(restaurantId)) {
+    //         revert FoodApp__InvalidRestaurantId();
+    //     }
 
-        UserProfile memory profile = IUserProfileManager(userProfileManager).getUserProfile(staffAccount);
+    //     UserProfile memory profile = IUserProfileManager(userProfileManager).getUserProfile(staffAccount);
 
-        bool isActuallyStaff = super._isStaffOfRestaurant(staffAccount, restaurantId); 
-        require(isActuallyStaff, "FoodApp: Account is not an active staff of this restaurant.");
+    //     bool isActuallyStaff = super._isStaffOfRestaurant(staffAccount, restaurantId); 
+    //     require(isActuallyStaff, "FoodApp: Account is not an active staff of this restaurant.");
 
-        Role staffRole = roles[staffAccount]; 
+    //     Role staffRole = roles[staffAccount]; 
 
-        uint128 assignmentDt = 0;
-        if (isActuallyStaff) { 
-             assignmentDt = super._getStaffAssignmentDateInternal(staffAccount, restaurantId);
-        }
+    //     uint128 assignmentDt = 0;
+    //     if (isActuallyStaff) { 
+    //          assignmentDt = super._getStaffAssignmentDateInternal(staffAccount, restaurantId);
+    //     }
 
-        staffDetails = StaffMemberDetails({
-            staffAddress: profile.userAddress,
-            name: profile.name,
-            phoneNumber: profile.phoneNumber,
-            email: profile.email,
-            imageUrl: profile.imageUrl,
-            isActiveProfile: profile.isActive,
-            registrationDate: profile.registrationDate,
-            restaurantId: restaurantId, 
-            staffRoleInRestaurant: staffRole,
-            assignmentDate: assignmentDt 
-        });
+    //     staffDetails = StaffMemberDetails({
+    //         staffAddress: profile.userAddress,
+    //         name: profile.name,
+    //         phoneNumber: profile.phoneNumber,
+    //         email: profile.email,
+    //         imageUrl: profile.imageUrl,
+    //         isActiveProfile: profile.isActive,
+    //         registrationDate: profile.registrationDate,
+    //         restaurantId: restaurantId, 
+    //         staffRoleInRestaurant: staffRole,
+    //         assignmentDate: assignmentDt 
+    //     });
 
-        return staffDetails;
-    }
-    function getAllStaffOfRestaurant(uint128 _restaurantId)
-        external view
-        returns (StaffMemberDetails[] memory)
-    {   
-        if (restaurantManager == address(0)) revert FoodApp__ManagerNotSet("RestaurantManager");
-        if (!IRestaurantManager(restaurantManager).restaurantExists(_restaurantId)) revert FoodApp__InvalidRestaurantId();
-        if (userProfileManager == address(0)) revert FoodApp__UserProfileManagerNotSet();
-        address[] memory staffAddresses = super._getStaffAddressesForRestaurantInternal(_restaurantId);
-        StaffMemberDetails[] memory allStaffDetails = new StaffMemberDetails[](staffAddresses.length);
-        for (uint i = 0; i < staffAddresses.length; i++) {
-            address currentStaffAddress = staffAddresses[i];
-            UserProfile memory profile = IUserProfileManager(userProfileManager).getUserProfile(currentStaffAddress);
-            Role staffRole = roles[currentStaffAddress]; 
-            uint128 assignmentDt = 0;
-            assignmentDt = super._getStaffAssignmentDateInternal(currentStaffAddress, _restaurantId);
-            allStaffDetails[i] = StaffMemberDetails({
-                staffAddress: currentStaffAddress,
-                name: profile.name,
-                phoneNumber: profile.phoneNumber,
-                email: profile.email,
-                imageUrl: profile.imageUrl,
-                isActiveProfile: profile.isActive,
-                registrationDate: profile.registrationDate,
-                restaurantId: _restaurantId,
-                staffRoleInRestaurant: staffRole,
-                assignmentDate: assignmentDt
-            });
-        }
-        return allStaffDetails;
-    }
+    //     return staffDetails;
+    // }
+    // function getAllStaffOfRestaurant(uint128 _restaurantId)
+    //     external view
+    //     returns (StaffMemberDetails[] memory)
+    // {   
+    //     if (restaurantManager == address(0)) revert FoodApp__ManagerNotSet("RestaurantManager");
+    //     if (!IRestaurantManager(restaurantManager).restaurantExists(_restaurantId)) revert FoodApp__InvalidRestaurantId();
+    //     if (userProfileManager == address(0)) revert FoodApp__UserProfileManagerNotSet();
+    //     address[] memory staffAddresses = super._getStaffAddressesForRestaurantInternal(_restaurantId);
+    //     StaffMemberDetails[] memory allStaffDetails = new StaffMemberDetails[](staffAddresses.length);
+    //     for (uint i = 0; i < staffAddresses.length; i++) {
+    //         address currentStaffAddress = staffAddresses[i];
+    //         UserProfile memory profile = IUserProfileManager(userProfileManager).getUserProfile(currentStaffAddress);
+    //         Role staffRole = roles[currentStaffAddress]; 
+    //         uint128 assignmentDt = 0;
+    //         assignmentDt = super._getStaffAssignmentDateInternal(currentStaffAddress, _restaurantId);
+    //         allStaffDetails[i] = StaffMemberDetails({
+    //             staffAddress: currentStaffAddress,
+    //             name: profile.name,
+    //             phoneNumber: profile.phoneNumber,
+    //             email: profile.email,
+    //             imageUrl: profile.imageUrl,
+    //             isActiveProfile: profile.isActive,
+    //             registrationDate: profile.registrationDate,
+    //             restaurantId: _restaurantId,
+    //             staffRoleInRestaurant: staffRole,
+    //             assignmentDate: assignmentDt
+    //         });
+    //     }
+    //     return allStaffDetails;
+    // }
 }
