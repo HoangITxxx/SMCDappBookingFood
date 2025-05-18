@@ -38,9 +38,9 @@
 						"type": "string"
 					},
 					{
-						"internalType": "string",
-						"name": "category",
-						"type": "string"
+						"internalType": "uint128",
+						"name": "categoryId",
+						"type": "uint128"
 					},
 					{
 						"internalType": "uint128",
@@ -111,9 +111,9 @@
 								"type": "string"
 							},
 							{
-								"internalType": "string",
-								"name": "category",
-								"type": "string"
+								"internalType": "uint128",
+								"name": "categoryId",
+								"type": "uint128"
 							},
 							{
 								"internalType": "uint128",
@@ -211,9 +211,9 @@
 								"type": "string"
 							},
 							{
-								"internalType": "string",
-								"name": "category",
-								"type": "string"
+								"internalType": "uint128",
+								"name": "categoryId",
+								"type": "uint128"
 							},
 							{
 								"internalType": "uint128",
@@ -244,6 +244,16 @@
 					{
 						"internalType": "address",
 						"name": "foodAppContract",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "_categoriesManagerAddress",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "_restaurantManagerAddress",
 						"type": "address"
 					},
 					{
@@ -300,6 +310,11 @@
 								"type": "string"
 							},
 							{
+								"internalType": "string",
+								"name": "imageUrl",
+								"type": "string"
+							},
+							{
 								"internalType": "uint128",
 								"name": "price",
 								"type": "uint128"
@@ -315,9 +330,9 @@
 								"type": "string"
 							},
 							{
-								"internalType": "string",
-								"name": "category",
-								"type": "string"
+								"internalType": "uint128",
+								"name": "categoryId",
+								"type": "uint128"
 							},
 							{
 								"internalType": "uint128",
@@ -374,19 +389,19 @@
 	},
 	"sources": {
 		"interfaces/IMenuManager.sol": {
-			"keccak256": "0x3eea07d91b37841658f9c350601814492ec1cd32ee838d168633414d3c35b641",
+			"keccak256": "0x8b1a54727e1d355a1b106c03a5af433b0dceec0bcba4f922466e0c0b0a52016c",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://66d59c7fb8bd7de0711e83a1548e9b7ea69099ec0c594e836e632fcb8fdbbf6e",
-				"dweb:/ipfs/Qmd5G9A4jnjqXjpTy3T3gjSmztL6kS1ZUhQNn6NBDMLKSe"
+				"bzz-raw://099a8ac4faeb11d7216a07720c070ab015d16656321c70af7060aa435d06cc16",
+				"dweb:/ipfs/QmVc5RN7Jgub6b1ZaPnBBy3xcNNGVxYE14ezVKVNndCaoL"
 			]
 		},
 		"structs/FoodTypes.sol": {
-			"keccak256": "0x3f5d6befba5c5df70f005b50c95bb69fa4be5534e09f2c66ea06976a0e2a677b",
+			"keccak256": "0x329419f942a9e31959a2ed9a800da1d1c4ac33a57484af32ec2b03c502f0bfbe",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://9a952bebc301907bc3f3cb2e5dbb52d83ce9c4fe9822f0611b602022f0746af1",
-				"dweb:/ipfs/Qmc8fVWULDz94ZATEHh7VJsSGovpfbJJaVGS7wc7wVVn3S"
+				"bzz-raw://795396a1e9507af898c5eef94c6741e805c038fa5f63ab284211bc040ce19717",
+				"dweb:/ipfs/QmdBjrRNEF3BRTTKMYXnJwsRPPNYWorHAHM7pc5vcaZNNA"
 			]
 		}
 	},

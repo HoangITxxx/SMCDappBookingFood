@@ -1,0 +1,254 @@
+{
+	"compiler": {
+		"version": "0.8.30+commit.73712a01"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [
+					{
+						"internalType": "uint128",
+						"name": "_restaurantId",
+						"type": "uint128"
+					},
+					{
+						"internalType": "string",
+						"name": "_tableNumber",
+						"type": "string"
+					}
+				],
+				"name": "addTable",
+				"outputs": [
+					{
+						"internalType": "uint128",
+						"name": "",
+						"type": "uint128"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint128",
+						"name": "_tableId",
+						"type": "uint128"
+					}
+				],
+				"name": "getTable",
+				"outputs": [
+					{
+						"components": [
+							{
+								"internalType": "uint128",
+								"name": "id",
+								"type": "uint128"
+							},
+							{
+								"internalType": "uint128",
+								"name": "restaurantId",
+								"type": "uint128"
+							},
+							{
+								"internalType": "string",
+								"name": "tableNumber",
+								"type": "string"
+							},
+							{
+								"internalType": "bool",
+								"name": "isActive",
+								"type": "bool"
+							}
+						],
+						"internalType": "struct Table",
+						"name": "",
+						"type": "tuple"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint128",
+						"name": "_restaurantId",
+						"type": "uint128"
+					},
+					{
+						"internalType": "string",
+						"name": "_tableNumber",
+						"type": "string"
+					}
+				],
+				"name": "getTableIdByRestaurantAndNumber",
+				"outputs": [
+					{
+						"internalType": "uint128",
+						"name": "",
+						"type": "uint128"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint128",
+						"name": "_restaurantId",
+						"type": "uint128"
+					}
+				],
+				"name": "getTablesByRestaurant",
+				"outputs": [
+					{
+						"components": [
+							{
+								"internalType": "uint128",
+								"name": "id",
+								"type": "uint128"
+							},
+							{
+								"internalType": "uint128",
+								"name": "restaurantId",
+								"type": "uint128"
+							},
+							{
+								"internalType": "string",
+								"name": "tableNumber",
+								"type": "string"
+							},
+							{
+								"internalType": "bool",
+								"name": "isActive",
+								"type": "bool"
+							}
+						],
+						"internalType": "struct Table[]",
+						"name": "",
+						"type": "tuple[]"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_foodAppContract",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "_restaurantManagerAddress",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "_factoryOwner",
+						"type": "address"
+					}
+				],
+				"name": "initialize",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint128",
+						"name": "_restaurantId",
+						"type": "uint128"
+					},
+					{
+						"internalType": "string",
+						"name": "_tableNumber",
+						"type": "string"
+					}
+				],
+				"name": "tableExists",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint128",
+						"name": "_tableId",
+						"type": "uint128"
+					},
+					{
+						"internalType": "string",
+						"name": "_newTableNumber",
+						"type": "string"
+					},
+					{
+						"internalType": "bool",
+						"name": "_isActive",
+						"type": "bool"
+					}
+				],
+				"name": "updateTable",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"interfaces/ITableManager.sol": "ITableManager"
+		},
+		"evmVersion": "prague",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": true,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"interfaces/ITableManager.sol": {
+			"keccak256": "0x8a86abcbdf5c26d2eff24e79580117ed220e58ac319408f181f6fc00ede71f4a",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://9d7b89f5905710738b024865fefd4b427ab3cf327ffa6baf8f04e0571f71e0e9",
+				"dweb:/ipfs/QmVhrDdCjHr9xwoqkd29vJBMM1aC7hwvJB4nVXGJwv2CXs"
+			]
+		},
+		"structs/FoodTypes.sol": {
+			"keccak256": "0x9a1a4eede4046205057eaec060f47e0c74db02fe1b37bea30e9ce78608b0b416",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://128ab057a8e277ffab3527428d4955c28ce6cce5a7c1ed268c29ddfea535c6b9",
+				"dweb:/ipfs/QmNaABZm5Zb13VpMi5gRHoVhZnyDZUx8hUYtsmZAAKTzuP"
+			]
+		}
+	},
+	"version": 1
+}

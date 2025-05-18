@@ -99,6 +99,11 @@
 						"type": "string"
 					},
 					{
+						"internalType": "uint128",
+						"name": "CCCD",
+						"type": "uint128"
+					},
+					{
 						"internalType": "string",
 						"name": "email",
 						"type": "string"
@@ -153,6 +158,11 @@
 								"internalType": "string",
 								"name": "phoneNumber",
 								"type": "string"
+							},
+							{
+								"internalType": "uint128",
+								"name": "CCCD",
+								"type": "uint128"
 							},
 							{
 								"internalType": "string",
@@ -249,19 +259,19 @@
 	},
 	"sources": {
 		"interfaces/IUserProfileManager.sol": {
-			"keccak256": "0xd5c36f88459e330b492c1b37ddaca84156d478a14df430efbecbbeac24d0187a",
+			"keccak256": "0x719f296d464d6f051c06c3ce08f8154f5594762163e783a223413cddde990d03",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://5b642e3c3bb630bfcae0349f51e416f9e7bb5f18388bddfec18c5c3d3733f1a8",
-				"dweb:/ipfs/QmdKqP5NsKc8S2pJefDGtHyKri3hkoeWMJWWemVKQhXgXo"
+				"bzz-raw://4030bb86df05af7cac560fb417b34734bfcd30b9e02d5b8541172dae1334ce2e",
+				"dweb:/ipfs/QmTSD7Lt6HwaAjZngh8oZtAN6mQZeMHJj21tcswr9mwYDV"
 			]
 		},
 		"structs/FoodTypes.sol": {
-			"keccak256": "0x8d46fb9f22c1245e2342a15285e279e9e710baf057b6fbce0e2b10c4b9753371",
+			"keccak256": "0x6ec722e94f93d171514dea9e22d05341e2db277d95c22266b364818a6dbf2cfe",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://73d7e0d738b54e8812777058abe3b88d98ef3d4a91aacbf6d0ede3359a73a69e",
-				"dweb:/ipfs/QmWRjnoJTB55wHg55icrzwTY5wKDBFmg3DU8dyzN19Kt8g"
+				"bzz-raw://01766847f2122d7e1b24ee29d3661b86ab2399463333c9bb5eaf6cc024223a44",
+				"dweb:/ipfs/QmXxM6Drgi8vdoPAUjGho4A8bJuXhyvZW2ji3Kdnbk4wxZ"
 			]
 		}
 	},

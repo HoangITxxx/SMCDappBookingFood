@@ -48,6 +48,7 @@ contract UserProfileManager is Initializable, OwnableUpgradeable, IUserProfileMa
         address user,
         string calldata name,
         string calldata phoneNumber,
+        uint128 CCCD,
         string calldata email,
         string calldata imageUrl
     ) external override onlyFoodApp { 
@@ -60,6 +61,7 @@ contract UserProfileManager is Initializable, OwnableUpgradeable, IUserProfileMa
         profile.userAddress = user;
         profile.name = name;
         profile.phoneNumber = phoneNumber;
+        profile.CCCD = CCCD;
         profile.email = email;
         profile.imageUrl = imageUrl;
 

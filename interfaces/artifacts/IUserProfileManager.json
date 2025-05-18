@@ -50,7 +50,7 @@
 		"gasEstimates": null,
 		"methodIdentifiers": {
 			"activateUserProfile(address)": "0d07e910",
-			"createOrUpdateUserProfile(address,string,string,string,string)": "11adcf32",
+			"createOrUpdateUserProfile(address,string,string,uint128,string,string)": "c3495dfc",
 			"deactivateUserProfile(address)": "241481d3",
 			"getUserProfile(address)": "987ee156",
 			"initialize(address,address)": "485cc955",
@@ -152,6 +152,11 @@
 					"type": "string"
 				},
 				{
+					"internalType": "uint128",
+					"name": "CCCD",
+					"type": "uint128"
+				},
+				{
 					"internalType": "string",
 					"name": "email",
 					"type": "string"
@@ -206,6 +211,11 @@
 							"internalType": "string",
 							"name": "phoneNumber",
 							"type": "string"
+						},
+						{
+							"internalType": "uint128",
+							"name": "CCCD",
+							"type": "uint128"
 						},
 						{
 							"internalType": "string",

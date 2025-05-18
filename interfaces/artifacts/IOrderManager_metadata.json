@@ -50,6 +50,30 @@
 				"inputs": [
 					{
 						"internalType": "uint128",
+						"name": "_restaurantId",
+						"type": "uint128"
+					},
+					{
+						"internalType": "uint128",
+						"name": "_menuItemId",
+						"type": "uint128"
+					}
+				],
+				"name": "getCompletedOrderItemCount",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint128",
 						"name": "orderId",
 						"type": "uint128"
 					}
@@ -124,6 +148,11 @@
 								"internalType": "uint128",
 								"name": "quantity",
 								"type": "uint128"
+							},
+							{
+								"internalType": "address",
+								"name": "servingStaff",
+								"type": "address"
 							}
 						],
 						"internalType": "struct Order",
@@ -241,6 +270,11 @@
 								"internalType": "uint128",
 								"name": "quantity",
 								"type": "uint128"
+							},
+							{
+								"internalType": "address",
+								"name": "servingStaff",
+								"type": "address"
 							}
 						],
 						"internalType": "struct Order[]",
@@ -251,6 +285,25 @@
 						"internalType": "uint256",
 						"name": "nextStartIndex",
 						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint128",
+						"name": "_restaurantId",
+						"type": "uint128"
+					}
+				],
+				"name": "getRestaurantCompletedMenuItemIds",
+				"outputs": [
+					{
+						"internalType": "uint128[]",
+						"name": "",
+						"type": "uint128[]"
 					}
 				],
 				"stateMutability": "view",
@@ -271,6 +324,11 @@
 					{
 						"internalType": "address",
 						"name": "restaurantManagerAddress",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "_tableManagerAddress",
 						"type": "address"
 					},
 					{
@@ -305,6 +363,16 @@
 						"internalType": "uint128[]",
 						"name": "quantities",
 						"type": "uint128[]"
+					},
+					{
+						"internalType": "address",
+						"name": "servingStaffEoa",
+						"type": "address"
+					},
+					{
+						"internalType": "string",
+						"name": "tableNumber",
+						"type": "string"
 					}
 				],
 				"name": "placeOrder",
@@ -369,19 +437,19 @@
 	},
 	"sources": {
 		"interfaces/IOrderManager.sol": {
-			"keccak256": "0x3df6ca33d2b579c3cab5aa7811fb7070aa7527bdb7e8aeddb901f447f940e351",
+			"keccak256": "0xe569a098b7ff43941b1e5ff269bf69523b07a4e79c820ae427bbb104df36d092",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://b33497e8a54e8232c688d79c8ee28e217bcf0847ab054d7fc90843179f0da70c",
-				"dweb:/ipfs/QmUfm8zahNMExoojHzcbsABSJEEkx4baD1qNyyfDmNv6iA"
+				"bzz-raw://085e16e131444f6e003825a061fa8dba7c2b0dfbeae0404c953133481e2a6c5f",
+				"dweb:/ipfs/QmPeiqySSVtttne6mxcmhDWQbfiy6rcA3AxpyxnKFffSfC"
 			]
 		},
 		"structs/FoodTypes.sol": {
-			"keccak256": "0x8d46fb9f22c1245e2342a15285e279e9e710baf057b6fbce0e2b10c4b9753371",
+			"keccak256": "0x86b0baf6406f5b8360487134f0bc882f84fd64a527db0f82074a81fed69a8440",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://73d7e0d738b54e8812777058abe3b88d98ef3d4a91aacbf6d0ede3359a73a69e",
-				"dweb:/ipfs/QmWRjnoJTB55wHg55icrzwTY5wKDBFmg3DU8dyzN19Kt8g"
+				"bzz-raw://c9240d3f4c67a0a6d44c7cd54043c6352a5c7c96956f955008383912d3ddfe95",
+				"dweb:/ipfs/QmZTP8XnzaEXsdtrVXarvf2JYFjXuF9kTHKJCS8d4TCwBo"
 			]
 		}
 	},

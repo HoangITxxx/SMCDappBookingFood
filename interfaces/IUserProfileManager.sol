@@ -13,6 +13,7 @@ interface IUserProfileManager {
         address user,
         string calldata name,
         string calldata phoneNumber,
+        uint128 CCCD,
         string calldata email,
         string calldata imageUrl
     ) external;

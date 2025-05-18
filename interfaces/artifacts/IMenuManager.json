@@ -49,13 +49,13 @@
 		},
 		"gasEstimates": null,
 		"methodIdentifiers": {
-			"addMenuItem(uint128,string,string,string,uint128,string,string,uint128)": "d5d2768b",
+			"addMenuItem(uint128,string,string,string,uint128,string,uint128,uint128)": "8d90ec0a",
 			"getMenuItem(uint128,uint128)": "0c528968",
 			"getMenuItemIdsByRestaurant(uint128)": "6b88cde5",
 			"getMenuItemsByRestaurant(uint128)": "61dcddda",
-			"initialize(address,address)": "485cc955",
+			"initialize(address,address,address,address)": "f8c8765e",
 			"removeMenuItem(uint128,uint128)": "5b94ea5d",
-			"updateMenuItem((uint128,uint128,string,string,uint128,bool,string,string,uint128,uint128,uint128))": "52715b80"
+			"updateMenuItem((uint128,uint128,string,string,string,uint128,bool,string,uint128,uint128,uint128,uint128))": "9e89cab6"
 		}
 	},
 	"abi": [
@@ -92,9 +92,9 @@
 					"type": "string"
 				},
 				{
-					"internalType": "string",
-					"name": "category",
-					"type": "string"
+					"internalType": "uint128",
+					"name": "categoryId",
+					"type": "uint128"
 				},
 				{
 					"internalType": "uint128",
@@ -165,9 +165,9 @@
 							"type": "string"
 						},
 						{
-							"internalType": "string",
-							"name": "category",
-							"type": "string"
+							"internalType": "uint128",
+							"name": "categoryId",
+							"type": "uint128"
 						},
 						{
 							"internalType": "uint128",
@@ -265,9 +265,9 @@
 							"type": "string"
 						},
 						{
-							"internalType": "string",
-							"name": "category",
-							"type": "string"
+							"internalType": "uint128",
+							"name": "categoryId",
+							"type": "uint128"
 						},
 						{
 							"internalType": "uint128",
@@ -298,6 +298,16 @@
 				{
 					"internalType": "address",
 					"name": "foodAppContract",
+					"type": "address"
+				},
+				{
+					"internalType": "address",
+					"name": "_categoriesManagerAddress",
+					"type": "address"
+				},
+				{
+					"internalType": "address",
+					"name": "_restaurantManagerAddress",
 					"type": "address"
 				},
 				{
@@ -354,6 +364,11 @@
 							"type": "string"
 						},
 						{
+							"internalType": "string",
+							"name": "imageUrl",
+							"type": "string"
+						},
+						{
 							"internalType": "uint128",
 							"name": "price",
 							"type": "uint128"
@@ -369,9 +384,9 @@
 							"type": "string"
 						},
 						{
-							"internalType": "string",
-							"name": "category",
-							"type": "string"
+							"internalType": "uint128",
+							"name": "categoryId",
+							"type": "uint128"
 						},
 						{
 							"internalType": "uint128",

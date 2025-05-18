@@ -3,8 +3,8 @@ pragma solidity ^0.8.24;
 import "../structs/FoodTypes.sol";
 
 interface IMenuManager {
-    function initialize(address foodAppContract, address owner) external;
-    function addMenuItem(uint128 restaurantId, string memory name, string memory menuTitle, string memory imageUrl, uint128 price, string memory description, string memory category, uint128 preparationTime) external;
+    function initialize(address foodAppContract, address _categoriesManagerAddress, address _restaurantManagerAddress, address owner) external;
+    function addMenuItem(uint128 restaurantId, string memory name, string memory menuTitle, string memory imageUrl, uint128 price, string memory description, uint128 categoryId, uint128 preparationTime) external;
     function updateMenuItem(UpdateMenuItemParams memory params) external;
     function removeMenuItem(uint128 restaurantId, uint128 menuId) external;
     

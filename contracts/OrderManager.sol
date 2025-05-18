@@ -7,6 +7,7 @@ import "../structs/FoodTypes.sol";
 import "../interfaces/IOrderManager.sol";
 import "../interfaces/IMenuManager.sol";
 import "../interfaces/IRestaurantManager.sol";
+import "../interfaces/ITableManager.sol";
 
 contract OrderManager is OwnableUpgradeable, IOrderManager, ReentrancyGuard {
     uint128 public nextOrderId;
@@ -20,10 +21,11 @@ contract OrderManager is OwnableUpgradeable, IOrderManager, ReentrancyGuard {
 
     IMenuManager public menuManager;
     IRestaurantManager public restaurantManager;
+    ITableManager public tableManager;
     address public foodAppContractAddress;
     uint256 public platformFeePercent;
 
-    event OrderPlaced(uint128 indexed orderId, address indexed customerEoa, uint128 indexed restaurantId, uint256 totalPrice);
+    event OrderPlaced(uint128 indexed orderId, address indexed customerEoa, uint128 indexed restaurantId, uint256 totalPrice, address servingStaff, string tableNumber);
     event OrderStatusUpdated(uint128 indexed orderId, OrderStatus oldStatus, OrderStatus newStatus);
     event OrderCancelled(uint128 indexed orderId, address indexed customerEoa, uint256 refundAmount);
     event OrderCompleted(uint128 indexed orderId, address indexed restaurantOwner, uint256 amountToRestaurant, uint256 platformFee);
@@ -47,6 +49,8 @@ contract OrderManager is OwnableUpgradeable, IOrderManager, ReentrancyGuard {
     error OrderManager__ItemSoldOut(uint128 menuItemId);
     error OrderManager__InvalidPagination();
     error OrderManager__RestaurantNotFound();
+    error OrderManager__TableManagerNotSet();
+    error OrderManager__TableNotAvailable(uint128 restaurantId, string tableNumber);
 
     modifier onlyFoodAppContract() {
         if (msg.sender != foodAppContractAddress) revert OrderManager__NotFoodApp();
@@ -57,15 +61,19 @@ contract OrderManager is OwnableUpgradeable, IOrderManager, ReentrancyGuard {
         address _foodAppContract,
         address _menuManagerAddress,
         address _restaurantManagerAddress,
+        address _tableManagerAddress,
         address _factoryOwner
     ) public initializer {
         if (_foodAppContract == address(0)) revert OrderManager__InvalidAddress();
         if (_menuManagerAddress == address(0)) revert OrderManager__InvalidDependencyAddress("MenuManager");
         if (_restaurantManagerAddress == address(0)) revert OrderManager__InvalidDependencyAddress("RestaurantManager");
+        if (_tableManagerAddress == address(0)) revert OrderManager__InvalidAddress();
+        
         __Ownable_init(_factoryOwner);
         foodAppContractAddress = _foodAppContract;
         menuManager = IMenuManager(_menuManagerAddress);
         restaurantManager = IRestaurantManager(_restaurantManagerAddress);
+        tableManager = ITableManager(_tableManagerAddress);
         nextOrderId = 1;
         platformFeePercent = 5;
     }
@@ -80,13 +88,16 @@ contract OrderManager is OwnableUpgradeable, IOrderManager, ReentrancyGuard {
         address customerEoa,
         uint128 restaurantId,
         uint128[] memory itemIds,
-        uint128[] memory quantities
+        uint128[] memory quantities,
+        address _servingStaffEoa,
+        string memory _tableNumber
     ) external payable override onlyFoodAppContract nonReentrant {
         // Kiểm tra nhà hàng tồn tại
         if (!restaurantManager.restaurantExists(restaurantId)) revert OrderManager__RestaurantNotFound();
         // Kiểm tra dữ liệu đầu vào
         if (itemIds.length != quantities.length || itemIds.length == 0) revert OrderManager__InvalidOrderData();
         if (customerEoa == address(0)) revert OrderManager__InvalidAddress();
+        if (address(tableManager) == address(0)) revert OrderManager__TableManagerNotSet();
 
         uint256 calculatedTotalPrice = 0;
         uint128 maxPreparationTime = 0;
@@ -123,6 +134,11 @@ contract OrderManager is OwnableUpgradeable, IOrderManager, ReentrancyGuard {
             (bool success,) = payable(customerEoa).call{value: msg.value - calculatedTotalPrice}("");
             if (!success) revert OrderManager__TransferFailed();
         }
+        if (bytes(_tableNumber).length > 0) {
+            if (!tableManager.tableExists(restaurantId, _tableNumber)) {
+                revert OrderManager__TableNotAvailable(restaurantId, _tableNumber);
+            }
+        }
         // Tạo đơn hàng mới
         uint128 currentOrderId = nextOrderId;
         Order storage newOrder = orders[currentOrderId];
@@ -134,6 +150,8 @@ contract OrderManager is OwnableUpgradeable, IOrderManager, ReentrancyGuard {
         newOrder.timestamp = uint128(block.timestamp);
         newOrder.preparationTime = maxPreparationTime;
         newOrder.quantity = totalQuantity; // Lưu tổng số lượng món
+        newOrder.servingStaff = _servingStaffEoa;
+        newOrder.tableNumber = _tableNumber;
 
         // Lưu danh sách món ăn vào đơn hàng
         for (uint i = 0; i < orderItemsMemory.length; i++) {
@@ -142,7 +160,7 @@ contract OrderManager is OwnableUpgradeable, IOrderManager, ReentrancyGuard {
         // Lưu orderId vào danh sách đơn hàng của khách hàng
         customerOrderIds[customerEoa].push(currentOrderId);
         // Phát sự kiện
-        emit OrderPlaced(currentOrderId, customerEoa, restaurantId, calculatedTotalPrice);
+        emit OrderPlaced(currentOrderId, customerEoa, restaurantId, calculatedTotalPrice, _servingStaffEoa, _tableNumber);
         nextOrderId++;
     }
 

@@ -51,11 +51,13 @@
 		"methodIdentifiers": {
 			"cancelOrder(address,uint128)": "1b4257f6",
 			"completeOrder(address,uint128,uint128)": "cf31fb46",
+			"getCompletedOrderItemCount(uint128,uint128)": "03c80479",
 			"getOrder(uint128)": "117d4128",
 			"getOrderCountByCustomer(address)": "7338c5aa",
 			"getOrdersByCustomer(address,uint256,uint256)": "2fae2095",
-			"initialize(address,address,address,address)": "f8c8765e",
-			"placeOrder(address,uint128,uint128[],uint128[])": "c60c14d9",
+			"getRestaurantCompletedMenuItemIds(uint128)": "16fd586e",
+			"initialize(address,address,address,address,address)": "1459457a",
+			"placeOrder(address,uint128,uint128[],uint128[],address,string)": "20de7ec9",
 			"updateOrderStatus(address,uint128,uint8,uint128)": "19c8ccef"
 		}
 	},
@@ -99,6 +101,30 @@
 			"name": "completeOrder",
 			"outputs": [],
 			"stateMutability": "nonpayable",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "uint128",
+					"name": "_restaurantId",
+					"type": "uint128"
+				},
+				{
+					"internalType": "uint128",
+					"name": "_menuItemId",
+					"type": "uint128"
+				}
+			],
+			"name": "getCompletedOrderItemCount",
+			"outputs": [
+				{
+					"internalType": "uint256",
+					"name": "",
+					"type": "uint256"
+				}
+			],
+			"stateMutability": "view",
 			"type": "function"
 		},
 		{
@@ -179,6 +205,11 @@
 							"internalType": "uint128",
 							"name": "quantity",
 							"type": "uint128"
+						},
+						{
+							"internalType": "address",
+							"name": "servingStaff",
+							"type": "address"
 						}
 					],
 					"internalType": "struct Order",
@@ -296,6 +327,11 @@
 							"internalType": "uint128",
 							"name": "quantity",
 							"type": "uint128"
+						},
+						{
+							"internalType": "address",
+							"name": "servingStaff",
+							"type": "address"
 						}
 					],
 					"internalType": "struct Order[]",
@@ -306,6 +342,25 @@
 					"internalType": "uint256",
 					"name": "nextStartIndex",
 					"type": "uint256"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "uint128",
+					"name": "_restaurantId",
+					"type": "uint128"
+				}
+			],
+			"name": "getRestaurantCompletedMenuItemIds",
+			"outputs": [
+				{
+					"internalType": "uint128[]",
+					"name": "",
+					"type": "uint128[]"
 				}
 			],
 			"stateMutability": "view",
@@ -326,6 +381,11 @@
 				{
 					"internalType": "address",
 					"name": "restaurantManagerAddress",
+					"type": "address"
+				},
+				{
+					"internalType": "address",
+					"name": "_tableManagerAddress",
 					"type": "address"
 				},
 				{
@@ -360,6 +420,16 @@
 					"internalType": "uint128[]",
 					"name": "quantities",
 					"type": "uint128[]"
+				},
+				{
+					"internalType": "address",
+					"name": "servingStaffEoa",
+					"type": "address"
+				},
+				{
+					"internalType": "string",
+					"name": "tableNumber",
+					"type": "string"
 				}
 			],
 			"name": "placeOrder",

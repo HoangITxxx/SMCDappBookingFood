@@ -6,6 +6,8 @@ import "../interfaces/IMenuManager.sol";
 import "../interfaces/IOrderManager.sol";
 import "../interfaces/IReviewManager.sol";
 import "../interfaces/IUserProfileManager.sol";
+import "../interfaces/ITableManager.sol"; 
+import "../interfaces/ICategoriesManager.sol";
 
 library ProxyLib {
     function deployMinimalProxy(address implementation) internal returns (address proxy) {
@@ -79,14 +81,27 @@ contract FoodAppFactory {
 
         if (typeHash == keccak256("RestaurantManager")) {
             IRestaurantManager(managerProxy).initialize(foodAppContract, factoryOwner);
+        } else if (typeHash == keccak256("CategoriesManager")) { 
+            address restaurantManagerAddress = managers[foodAppContract]["RestaurantManager"];
+            if (restaurantManagerAddress == address(0)) revert FoodAppFactory__DependencyNotDeployed("RestaurantManager for CategoriesManager");
+            ICategoriesManager(managerProxy).initialize(foodAppContract, restaurantManagerAddress, factoryOwner);
         } else if (typeHash == keccak256("MenuManager")) {
-            IMenuManager(managerProxy).initialize(foodAppContract, factoryOwner);
+            address restaurantManagerAddress = managers[foodAppContract]["RestaurantManager"];
+            address categoriesManagerAddress = managers[foodAppContract]["CategoriesManager"];
+            if (restaurantManagerAddress == address(0)) revert FoodAppFactory__DependencyNotDeployed("RestaurantManager for MenuManager");
+            if (categoriesManagerAddress == address(0)) revert FoodAppFactory__DependencyNotDeployed("CategoriesManager for MenuManager");
+            IMenuManager(managerProxy).initialize(foodAppContract, categoriesManagerAddress , restaurantManagerAddress , factoryOwner);
+        } else if (typeHash == keccak256("TableManager")) { 
+            address restaurantManagerAddress = managers[foodAppContract]["RestaurantManager"];
+            if (restaurantManagerAddress == address(0)) revert FoodAppFactory__DependencyNotDeployed("RestaurantManager for TableManager");
+            ITableManager(managerProxy).initialize(foodAppContract, restaurantManagerAddress, factoryOwner);
         } else if (typeHash == keccak256("OrderManager")) {
             address menuManagerAddress = managers[foodAppContract]["MenuManager"];
             address restaurantManagerAddress = managers[foodAppContract]["RestaurantManager"];
+            address tableManagerAddress = managers[foodAppContract]["TableManager"];
             if (menuManagerAddress == address(0)) revert FoodAppFactory__DependencyNotDeployed("MenuManager");
             if (restaurantManagerAddress == address(0)) revert FoodAppFactory__DependencyNotDeployed("RestaurantManager");
-            IOrderManager(managerProxy).initialize(foodAppContract, menuManagerAddress, restaurantManagerAddress, factoryOwner);
+            IOrderManager(managerProxy).initialize(foodAppContract, menuManagerAddress, restaurantManagerAddress, tableManagerAddress, factoryOwner);
         } else if (typeHash == keccak256("ReviewManager")) {
             address restaurantManagerAddress = managers[foodAppContract]["RestaurantManager"];
             address menuManagerAddress = managers[foodAppContract]["MenuManager"];

@@ -14,7 +14,7 @@ struct MenuItem {
     uint128 price;
     bool available;
     string description;
-    string category;
+    uint128 categoryId;
     uint128 totalRating; 
     uint128 ratingCount; 
     uint128 preparationTime;
@@ -29,10 +29,18 @@ struct UpdateMenuItemParams {
     uint128 price;
     bool available;
     string description;
-    string category;
+    uint128 categoryId;
     uint128 preparationTime;
     uint128 totalRating; 
     uint128 ratingCount;
+}
+
+struct Category {
+    uint128 id;
+    uint128 restaurantId;
+    string name;
+    string description; 
+    bool isActive;
 }
 
 struct OrderItemDetail {
@@ -52,6 +60,8 @@ struct Order {
     uint128 timestamp;
     uint128 preparationTime; 
     uint128 quantity;
+    address servingStaff;
+    string tableNumber; 
 }
 
 struct SuggestedMenuItem {
@@ -59,7 +69,8 @@ struct SuggestedMenuItem {
     string name;
     string imageUrl; 
     uint128 price;    
-    string category;
+    uint128 categoryId;
+    string categoryName;
     uint256 completedOrderCount;
 }
 
@@ -104,6 +115,7 @@ struct UserProfile {
     address userAddress; 
     string name;
     string phoneNumber;
+    uint128 CCCD;
     string email; 
     string imageUrl;
     bool isActive; 
@@ -119,6 +131,7 @@ struct StaffMemberDetails {
     address staffAddress;
     string name;
     string phoneNumber;
+    uint128 CCCD;
     string email;
     string imageUrl;
     bool isActiveProfile; 
@@ -126,4 +139,11 @@ struct StaffMemberDetails {
     uint128 restaurantId;  
     Role staffRoleInRestaurant;
     uint128 assignmentDate; 
+}
+
+struct Table {
+    uint128 id;
+    uint128 restaurantId;
+    string tableNumber; 
+    bool isActive;
 }

@@ -298,8 +298,8 @@
 			"bytecodeHash": "ipfs"
 		},
 		"optimizer": {
-			"enabled": true,
-			"runs": 300
+			"enabled": false,
+			"runs": 200
 		},
 		"remappings": []
 	},
@@ -313,11 +313,11 @@
 			]
 		},
 		"structs/FoodTypes.sol": {
-			"keccak256": "0xdf7549b09cbeb2f9b7ae9bb070508253768f37f29456ae5b68fa45e2b8e4757f",
+			"keccak256": "0x11358ebd6f571a5eaee0ff69c2dbfc85af5b1d4a05746e962959f481c9ec5f27",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://60904b526c49ece21b558254c6d02583d114db46522d47a92c360774a6cfab8d",
-				"dweb:/ipfs/QmUVQtA7yQaxCdDU6YLiJJH1iopTt5JB8K6Ayw739dbCGw"
+				"bzz-raw://01317002429a391d3e9f21e761be45cd8811287932f420ee964fd62f39bbea53",
+				"dweb:/ipfs/QmbaVGxDpM5tK2hjYYcskeqqWgLuvnHBKsKaiQh4hoZ3Kt"
 			]
 		}
 	},
